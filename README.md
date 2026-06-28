@@ -7,11 +7,7 @@
 ![License](https://img.shields.io/github/license/gokcank/AstroYorum?style=for-the-badge)
 
 <p align="center">
-  <img src="screenshots/1.jpg" width="19%" />
-  <img src="screenshots/2.jpg" width="19%" />
-  <img src="screenshots/3.jpg" width="19%" />
-  <img src="screenshots/4.jpg" width="19%" />
-  <img src="screenshots/5.jpg" width="19%" />
+  <img src="screenshots/cover.png" width="100%" />
 </p>
 
 AstroYorum is an interactive astrology, tarot, and moon phase tracking application built for Android. 
