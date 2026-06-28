@@ -39,6 +39,18 @@ For a detailed list of all new features, improvements, and bug fixes, please see
 
 All sensitive credentials such as `Keystore Passwords` and `AdMob API Keys` are completely isolated from the repository using `local.properties` and injected dynamically into `BuildConfig` during the build process, ensuring maximum repository security. Gemini API keys are also secured via Firebase environment configurations.
 
+## 💡 Open Source Template & Setup
+
+This repository serves as a **ready-to-use template** for an AI-powered Android application. 
+Because all sensitive credentials (like `google-services.json` and AdMob keys in `local.properties`) are excluded from this repository for security reasons, the app will not compile or run out-of-the-box. 
+
+If you want to use this boilerplate to build your own app, you must:
+1. Connect the app to your own Firebase project and download your `google-services.json` into the `app/` directory.
+2. Set up Firebase Cloud Functions with your own Gemini API key.
+3. Add your own AdMob App ID and Unit IDs to your `local.properties` file.
+
+*(Bu repo, şifreler ve API anahtarları gizlendiği için doğrudan çalıştırılamaz. Kendi projenizde kullanmak isterseniz kendi Firebase, Gemini ve AdMob hesaplarınızı bağlamanız gerekmektedir.)*
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
