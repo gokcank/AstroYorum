@@ -20,3 +20,4 @@ local.properties
 .env
 functions/.env
 google-services.json
+scratch_notes.md
