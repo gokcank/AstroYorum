@@ -2,10 +2,10 @@
 
 ![Kotlin](https://img.shields.io/badge/Kotlin-B125EA?style=for-the-badge&logo=kotlin&logoColor=white)
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
-![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
 ![Gemini AI](https://img.shields.io/badge/Gemini%20AI-8E75B2?style=for-the-badge&logo=googlebard&logoColor=white)
 ![License](https://img.shields.io/github/license/gokcank/AstroYorum?style=for-the-badge)
-![Version](https://img.shields.io/badge/Version-v1.0.2_(Open_Beta)-blue?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-v1.0.2_(Closed_Beta)-blue?style=for-the-badge)
 
 <p align="center">
   <img src="screenshots/cover.png" width="100%" />
@@ -29,7 +29,7 @@ For a detailed list of all new features, improvements, and bug fixes, please see
 
 - **UI & Layout**: Kotlin & Jetpack Compose (Material 3)
 - **Architecture**: MVVM (Model-View-ViewModel)
-- **Backend & AI**: Firebase Cloud Functions (Node.js), Firestore Database, Google Generative AI (Gemini Pro API)
+- **Backend & AI**: Supabase (PostgreSQL Database, Edge Functions), Google Generative AI (Gemini Pro API)
 - **Monetization**: Google Mobile Ads SDK (AdMob)
 - **Image Loading**: Coil
 - **Local Storage**: DataStore (Preferences)
@@ -37,19 +37,19 @@ For a detailed list of all new features, improvements, and bug fixes, please see
 
 ## 🔐 Security
 
-All sensitive credentials such as `Keystore Passwords` and `AdMob API Keys` are completely isolated from the repository using `local.properties` and injected dynamically into `BuildConfig` during the build process, ensuring maximum repository security. Gemini API keys are also secured via Firebase environment configurations.
+All sensitive credentials such as `Keystore Passwords`, `Supabase Keys` and `AdMob API Keys` are completely isolated from the repository using `local.properties` and injected dynamically into `BuildConfig` during the build process, ensuring maximum repository security. Gemini API keys are also secured via Supabase environment configurations.
 
 ## 💡 Open Source Template & Setup
 
 This repository serves as a **ready-to-use template** for an AI-powered Android application. 
-Because all sensitive credentials (like `google-services.json` and AdMob keys in `local.properties`) are excluded from this repository for security reasons, the app will not compile or run out-of-the-box. 
+Because all sensitive credentials (like Supabase API keys and AdMob keys in `local.properties`) are excluded from this repository for security reasons, the app will not compile or run out-of-the-box. 
 
 If you want to use this boilerplate to build your own app, you must:
-1. Connect the app to your own Firebase project and download your `google-services.json` into the `app/` directory.
-2. Set up Firebase Cloud Functions with your own Gemini API key.
+1. Connect the app to your own Supabase project and add `SUPABASE_URL` and `SUPABASE_ANON_KEY` to your `local.properties` file.
+2. Set up Supabase Edge Functions with your own Gemini API key.
 3. Add your own AdMob App ID and Unit IDs to your `local.properties` file.
 
-*(Bu repo, şifreler ve API anahtarları gizlendiği için doğrudan çalıştırılamaz. Kendi projenizde kullanmak isterseniz kendi Firebase, Gemini ve AdMob hesaplarınızı bağlamanız gerekmektedir.)*
+*(Bu repo, şifreler ve API anahtarları gizlendiği için doğrudan çalıştırılamaz. Kendi projenizde kullanmak isterseniz kendi Supabase, Gemini ve AdMob hesaplarınızı bağlamanız gerekmektedir.)*
 
 ## 📄 License
 
