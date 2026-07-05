@@ -2,10 +2,10 @@ package com.example.astroyorum.theme
 
 import androidx.compose.ui.graphics.Color
 
-// ─── Holografik ve Pastel Tema Renkleri ───────────────────────────────────────────
-// Ana renkler: aydınlık, ferah ve cam (glassmorphism) etkili
-val AstroBackground = Color(0xFFF8F9FA)       // Kırık beyaz / krem zemin
-val AstroSurface = Color(0xFFF3F0FA)          // Çok uçuk lavanta yüzey
+// ─── Tinted Light Tema Renkleri (Gündüz Modu) ──────────────────────────────────
+// Ana renkler: kırık beyaz yerine yumuşak uçuk lavanta ve şafak pembesi
+val AstroBackground = Color(0xFFF6F2FF)       // Uçuk lavanta zemin
+val AstroSurface = Color(0xFFFFF5F6)          // Şafak pembesi yüzey
 val AstroCard = Color(0x66FFFFFF)             // Yarı saydam beyaz (Glassmorphism kartlar için)
 val AstroCardLight = Color(0x99FFFFFF)        // Daha opak beyaz
 
@@ -21,6 +21,14 @@ val AstroLavender = Color(0xFFE0AAFF)         // Açık lavanta / lila
 val AstroText = Color(0xFF2D3748)             // Ana metin rengi (Koyu gri/lacivert)
 val AstroDark = Color(0xFF1A202C)             // Başlıklar için siyahımsı antrasit
 val AstroTextSecondary = Color(0xFF718096)    // İkincil metin (Orta gri)
+
+// ─── Dark Mode (Karanlık Mistik) Tema Renkleri ───────────────────────────────
+val AstroDarkBackground = Color(0xFF0B0F19)   // Derin uzay mavisi zemin
+val AstroDarkSurface = Color(0xFF1A1025)      // Koyu mistik mor yüzey
+val AstroDarkCard = Color(0x1AFFFFFF)         // %10 Saydam beyaz (Koyu cam efekti)
+val AstroDarkCardLight = Color(0x33FFFFFF)    // %20 Saydam beyaz
+val AstroDarkText = Color(0xFFFDF8E1)         // Yıldız tozu krem / altın metin rengi
+val AstroDarkTextSecondary = Color(0xFFA0AEC0) // Koyu mod ikincil metin (Serin gri)
 
 val AquaGlow = Color(0xFF00B4D8)              // Turkuaz / Cyan vurgu
 val RoseQuartz = Color(0xFFFFB5A7)            // Uçuk pastel pembe

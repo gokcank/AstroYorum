@@ -26,6 +26,7 @@ class UserPreferencesRepository(private val context: Context) {
         val KEY_GENDER = stringPreferencesKey("gender")
         val KEY_ZODIAC_ID = intPreferencesKey("zodiac_id")
         val KEY_ONBOARDING_DONE = intPreferencesKey("onboarding_done")
+        val KEY_THEME_PREFERENCE = intPreferencesKey("theme_preference") // 0=System, 1=Light, 2=Dark
     }
 
     val userProfile: Flow<UserProfile> = context.userDataStore.data.map { prefs ->
@@ -46,6 +47,10 @@ class UserPreferencesRepository(private val context: Context) {
         (prefs[KEY_ONBOARDING_DONE] ?: 0) == 1
     }
 
+    val themePreference: Flow<Int> = context.userDataStore.data.map { prefs ->
+        prefs[KEY_THEME_PREFERENCE] ?: 0
+    }
+
     suspend fun saveProfile(profile: UserProfile) {
         context.userDataStore.edit { prefs ->
             prefs[KEY_NAME] = profile.name
@@ -64,6 +69,12 @@ class UserPreferencesRepository(private val context: Context) {
     suspend fun resetOnboarding() {
         context.userDataStore.edit { prefs ->
             prefs[KEY_ONBOARDING_DONE] = 0
+        }
+    }
+
+    suspend fun saveThemePreference(themeMode: Int) {
+        context.userDataStore.edit { prefs ->
+            prefs[KEY_THEME_PREFERENCE] = themeMode
         }
     }
 }

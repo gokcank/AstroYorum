@@ -6,6 +6,27 @@ All notable changes, patches, and new features in the AstroYorum project will be
 
 ---
 
+## [v1.0.2] - 2026-07-05 (Open Beta)
+
+### 🇬🇧 English
+
+#### ✨ Features & Visuals
+- **Dark Mode Arrived:** You can now choose your preferred theme (Light/Dark/System) directly from the Profile tab.
+- **Visual Upgrades:** Color palettes across all screens have been updated with premium and mystical tones.
+
+#### 🛠️ Fixes & Improvements
+- **Text Visibility Fix:** Resolved the issue where text fields (like Name, Birthdate) were unreadable when switching to the dark theme.
+### 🇹🇷 Türkçe
+
+#### ✨ Yenilikler ve Görsellik
+- **Karanlık Mod Eklendi:** Profilinizden temanızı (Açık/Koyu/Sistem) dilediğiniz gibi seçebilirsiniz.
+- **Görsel Yenilikler:** Tüm ekranlardaki renk paletleri daha premium ve mistik tonlarla güncellendi.
+
+#### 🛠️ İyileştirmeler ve Hata Düzeltmeleri
+- **Metin Görünürlüğü Hatası:** Koyu temaya geçildiğinde metin kutularındaki yazıların okunmama sorunu tamamen çözüldü.
+
+---
+
 ## [v1.0.1] - 2026-06-28 (Closed Beta)
 
 ### 🇬🇧 English

@@ -5,7 +5,7 @@
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white)
 ![Gemini AI](https://img.shields.io/badge/Gemini%20AI-8E75B2?style=for-the-badge&logo=googlebard&logoColor=white)
 ![License](https://img.shields.io/github/license/gokcank/AstroYorum?style=for-the-badge)
-![Version](https://img.shields.io/badge/Version-v1.0.1_(Closed_Beta)-blue?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-v1.0.2_(Open_Beta)-blue?style=for-the-badge)
 
 <p align="center">
   <img src="screenshots/cover.png" width="100%" />

@@ -26,6 +26,7 @@ import com.example.astroyorum.data.TarotCard
 import com.example.astroyorum.data.TarotDatabase
 import com.example.astroyorum.theme.*
 import com.example.astroyorum.ui.components.*
+import androidx.compose.material3.MaterialTheme
 
 @Composable
 fun TarotScreen(modifier: Modifier = Modifier) {
@@ -39,14 +40,14 @@ fun TarotScreen(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(AstroBackground)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         // Başlık
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    Brush.verticalGradient(listOf(Color(0xFF1A0A2E), AstroBackground))
+                    Brush.verticalGradient(listOf(Color(0xFF1A0A2E), MaterialTheme.colorScheme.background))
                 )
                 .padding(20.dp)
         ) {
@@ -60,7 +61,7 @@ fun TarotScreen(modifier: Modifier = Modifier) {
                 Text(
                     text = "Evrenin mesajlarını al",
                     style = MaterialTheme.typography.bodySmall,
-                    color = AstroTextSecondary
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
@@ -125,7 +126,7 @@ fun TarotScreen(modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
-                    gradientColors = listOf(NebulaPurple.copy(0.2f), AstroCard)
+                    gradientColors = listOf(NebulaPurple.copy(0.2f), MaterialTheme.colorScheme.surfaceVariant)
                 ) {
                     Text(
                         text = "🔮 Tarot Hakkında",
@@ -137,7 +138,7 @@ fun TarotScreen(modifier: Modifier = Modifier) {
                     Text(
                         text = "Tarot destesi 78 karttan oluşur: 22 Büyük Arkana (Major Arcana) ve 56 Küçük Arkana (Minor Arcana). Her kart evrensel arketipleri ve yaşam deneyimlerini temsil eder.\n\nKartlar, içsel bilgeliğinizle bağlantı kurmanıza yardımcı olan aynalardır. Eğlence amaçlı yorumlanmalıdır.",
                         style = MaterialTheme.typography.bodySmall,
-                        color = AstroTextSecondary
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }
@@ -153,11 +154,11 @@ private fun ModeChip(
         modifier = modifier
             .clip(RoundedCornerShape(12.dp))
             .background(
-                if (isSelected) NebulaPurple.copy(0.4f) else AstroCard
+                if (isSelected) NebulaPurple.copy(0.4f) else MaterialTheme.colorScheme.surfaceVariant
             )
             .border(
                 1.dp,
-                if (isSelected) NebulaPurple else AstroCardLight,
+                if (isSelected) NebulaPurple else MaterialTheme.colorScheme.outline,
                 RoundedCornerShape(12.dp)
             )
             .clickable { onClick() }
@@ -167,7 +168,7 @@ private fun ModeChip(
         Text(
             text = text,
             style = MaterialTheme.typography.labelMedium,
-            color = if (isSelected) AstroLavender else AstroTextSecondary,
+            color = if (isSelected) AstroLavender else MaterialTheme.colorScheme.onSurfaceVariant,
             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
             textAlign = TextAlign.Center
         )
@@ -189,13 +190,13 @@ private fun SingleCardSection(
         Text(
             text = "Günün Mesajı",
             style = MaterialTheme.typography.headlineSmall,
-            color = AstroDark,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Bold
         )
         Text(
             text = if (!isRevealed) "Kartına odaklan ve dokun" else card.name,
             style = MaterialTheme.typography.bodyMedium,
-            color = AstroTextSecondary,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center
         )
         Spacer(Modifier.height(24.dp))
@@ -243,9 +244,9 @@ private fun AnimatedTarotCard(
             .clip(RoundedCornerShape(16.dp))
             .background(
                 if (rotation < 90f)
-                    Brush.verticalGradient(listOf(NebulaPurple.copy(0.5f), AstralViolet.copy(0.3f), AstroCard))
+                    Brush.verticalGradient(listOf(NebulaPurple.copy(0.5f), AstralViolet.copy(0.3f), MaterialTheme.colorScheme.surfaceVariant))
                 else
-                    Brush.verticalGradient(listOf(AstroCard, AstroSurface))
+                    Brush.verticalGradient(listOf(MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.colorScheme.surface))
             )
             .border(
                 2.dp,
@@ -273,7 +274,7 @@ private fun AnimatedTarotCard(
                 Text(
                     text = card.arcana + " Arkana",
                     style = MaterialTheme.typography.labelSmall,
-                    color = AstroTextSecondary
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         } else {
@@ -299,7 +300,7 @@ private fun AnimatedTarotCard(
 private fun CardDetails(card: TarotCard) {
     AstroCard(
         modifier = Modifier.fillMaxWidth(),
-        gradientColors = listOf(NebulaPurple.copy(0.2f), AstroCard)
+        gradientColors = listOf(NebulaPurple.copy(0.2f), MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Text(
             text = "✅ Olumlu",
@@ -311,7 +312,7 @@ private fun CardDetails(card: TarotCard) {
         Text(
             text = card.meaningUpright,
             style = MaterialTheme.typography.bodyMedium,
-            color = AstroText
+            color = MaterialTheme.colorScheme.onSurface
         )
         Spacer(Modifier.height(12.dp))
         Text(
@@ -324,7 +325,7 @@ private fun CardDetails(card: TarotCard) {
         Text(
             text = card.meaningReversed,
             style = MaterialTheme.typography.bodyMedium,
-            color = AstroText
+            color = MaterialTheme.colorScheme.onSurface
         )
         Spacer(Modifier.height(12.dp))
         StarDivider()
@@ -378,7 +379,7 @@ private fun ThreeCardSection(
         Text(
             text = "Geçmiş • Şimdi • Gelecek",
             style = MaterialTheme.typography.headlineSmall,
-            color = AstroDark,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
@@ -422,7 +423,7 @@ private fun ThreeCardSection(
                 onClick = { showAdPrompt = true },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = NebulaPurple,
-                    contentColor = AstroDark
+                    contentColor = MaterialTheme.colorScheme.onBackground
                 ),
                 shape = RoundedCornerShape(12.dp)
             ) {
@@ -443,8 +444,8 @@ private fun ThreeCardSection(
         AlertDialog(
             onDismissRequest = { showAdPrompt = false },
             title = { Text("Evrenin Mesajı", color = GoldenStardust) },
-            text = { Text("Kartların derin anlamını öğrenmek için kısa bir video izleyerek bize destek olur musunuz?", color = AstroDark) },
-            containerColor = AstroCard,
+            text = { Text("Kartların derin anlamını öğrenmek için kısa bir video izleyerek bize destek olur musunuz?", color = MaterialTheme.colorScheme.onBackground) },
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
             confirmButton = {
                 TextButton(onClick = {
                     showAdPrompt = false
@@ -459,7 +460,7 @@ private fun ThreeCardSection(
             },
             dismissButton = {
                 TextButton(onClick = { showAdPrompt = false }) {
-                    Text("Vazgeç", color = AstroTextSecondary)
+                    Text("Vazgeç", color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         )
@@ -474,7 +475,7 @@ private fun ThreeCardSection(
                     Text("Kapat", color = AquaGlow)
                 }
             },
-            containerColor = AstroSurface,
+            containerColor = MaterialTheme.colorScheme.surface,
             title = {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(text = selectedCardDetails!!.emoji, fontSize = 28.sp)
@@ -518,13 +519,13 @@ private fun AnimatedMiniCardView(card: TarotCard, isRevealed: Boolean, onClick: 
             .clip(RoundedCornerShape(12.dp))
             .background(
                 if (rotation < 90f)
-                    Brush.verticalGradient(listOf(NebulaPurple.copy(0.4f), AstroCard))
+                    Brush.verticalGradient(listOf(NebulaPurple.copy(0.4f), MaterialTheme.colorScheme.surfaceVariant))
                 else
-                    Brush.verticalGradient(listOf(AstroCard, AstroSurface))
+                    Brush.verticalGradient(listOf(MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.colorScheme.surface))
             )
             .border(
                 1.dp,
-                if (isRevealed) GoldenStardust.copy(0.6f) else AstroCardLight,
+                if (isRevealed) GoldenStardust.copy(0.6f) else MaterialTheme.colorScheme.outline,
                 RoundedCornerShape(12.dp)
             )
             .clickable { onClick() },

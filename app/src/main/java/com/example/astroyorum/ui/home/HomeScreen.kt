@@ -1,4 +1,4 @@
-package com.example.astroyorum.ui.home
+﻿package com.example.astroyorum.ui.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,6 +20,7 @@ import com.example.astroyorum.ads.BannerAdView
 import com.example.astroyorum.data.*
 import com.example.astroyorum.theme.*
 import com.example.astroyorum.ui.components.*
+import androidx.compose.material3.MaterialTheme
 
 @Composable
 fun HomeScreen(
@@ -41,7 +42,7 @@ fun HomeScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(AstroBackground)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -60,7 +61,7 @@ fun HomeScreen(
                         .fillMaxWidth()
                         .background(
                             Brush.verticalGradient(
-                                listOf(AstroSurface, AstroBackground)
+                                listOf(MaterialTheme.colorScheme.surface, MaterialTheme.colorScheme.background)
                             )
                         )
                         .padding(horizontal = 20.dp, vertical = 24.dp)
@@ -71,13 +72,13 @@ fun HomeScreen(
                                 "${today.get(java.util.Calendar.DAY_OF_MONTH)} " +
                                 "${monthNames[today.get(java.util.Calendar.MONTH)]}",
                             style = MaterialTheme.typography.labelMedium,
-                            color = AstroTextSecondary
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Spacer(Modifier.height(4.dp))
                         Text(
                             text = "Merhaba, ${userProfile.name.ifEmpty { "Yolcu" }} ✨",
                             style = MaterialTheme.typography.headlineMedium,
-                            color = AstroDark,
+                            color = MaterialTheme.colorScheme.onBackground,
                             fontWeight = FontWeight.Bold
                         )
                     }
@@ -93,7 +94,7 @@ fun HomeScreen(
                     gradientColors = listOf(
                         GoldenDim.copy(alpha = 0.3f),
                         NebulaPurple.copy(alpha = 0.3f),
-                        AstroCard
+                        MaterialTheme.colorScheme.surfaceVariant
                     )
                 ) {
                     Row(
@@ -110,13 +111,13 @@ fun HomeScreen(
                             Text(
                                 text = sign.name,
                                 style = MaterialTheme.typography.headlineSmall,
-                                color = AstroDark,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
                                 text = sign.dates,
                                 style = MaterialTheme.typography.labelSmall,
-                                color = AstroTextSecondary
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                         Spacer(Modifier.weight(1f))
@@ -125,7 +126,7 @@ fun HomeScreen(
                             Text(
                                 text = sign.element,
                                 style = MaterialTheme.typography.labelSmall,
-                                color = AstroTextSecondary
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                     }
@@ -144,7 +145,7 @@ fun HomeScreen(
                     Text(
                         text = dailyText,
                         style = MaterialTheme.typography.bodyMedium,
-                        color = AstroText,
+                        color = MaterialTheme.colorScheme.onSurface,
                         lineHeight = 22.sp,
                         maxLines = 4,
                         overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
@@ -226,7 +227,7 @@ fun HomeScreen(
                         )
                         QuickAccessCard(
                             emoji = "🌙", title = "Ay\nTakvimi",
-                            gradient = listOf(AquaGlow.copy(0.3f), AstroCard),
+                            gradient = listOf(AquaGlow.copy(0.3f), MaterialTheme.colorScheme.surfaceVariant),
                             modifier = Modifier.weight(1f),
                             onClick = onNavigateToMoon
                         )
@@ -265,13 +266,13 @@ fun HomeScreen(
                             Text(
                                 text = moonPhase.zodiacSign + " burcunda",
                                 style = MaterialTheme.typography.labelMedium,
-                                color = AstroTextSecondary
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                             Spacer(Modifier.height(4.dp))
                             Text(
                                 text = moonPhase.energy,
                                 style = MaterialTheme.typography.bodySmall,
-                                color = AstroText
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                         }
                     }
@@ -279,7 +280,7 @@ fun HomeScreen(
                     Text(
                         text = moonPhase.ritual,
                         style = MaterialTheme.typography.bodySmall,
-                        color = AstroTextSecondary,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
                     )
                 }
@@ -306,7 +307,7 @@ fun HomeScreen(
                                 .clip(RoundedCornerShape(8.dp))
                                 .background(
                                     Brush.verticalGradient(
-                                        listOf(NebulaPurple.copy(0.5f), AstroCard)
+                                        listOf(NebulaPurple.copy(0.5f), MaterialTheme.colorScheme.surfaceVariant)
                                     )
                                 ),
                             contentAlignment = Alignment.Center
@@ -322,13 +323,13 @@ fun HomeScreen(
                             Text(
                                 text = dailyCard.name,
                                 style = MaterialTheme.typography.titleLarge,
-                                color = AstroDark,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
                                 text = dailyCard.arcana + " Arkana",
                                 style = MaterialTheme.typography.labelSmall,
-                                color = AstroTextSecondary
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                     }
@@ -336,7 +337,7 @@ fun HomeScreen(
                     Text(
                         text = dailyCard.meaningUpright,
                         style = MaterialTheme.typography.bodySmall,
-                        color = AstroText
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                     Spacer(Modifier.height(12.dp))
                     OutlinedButton(
@@ -362,7 +363,7 @@ private fun LuckyChip(value: String, label: String) {
         Box(
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
-                .background(AstroBackground.copy(0.5f))
+                .background(MaterialTheme.colorScheme.background.copy(0.5f))
                 .padding(horizontal = 10.dp, vertical = 6.dp)
         ) {
             Text(
@@ -374,7 +375,7 @@ private fun LuckyChip(value: String, label: String) {
         Text(
             text = label,
             style = MaterialTheme.typography.labelSmall,
-            color = AstroTextSecondary,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             fontSize = 10.sp
         )
     }
@@ -405,7 +406,7 @@ private fun QuickAccessCard(
             Text(
                 text = title,
                 style = MaterialTheme.typography.labelSmall,
-                color = AstroText,
+                color = MaterialTheme.colorScheme.onSurface,
                 textAlign = TextAlign.Center,
                 lineHeight = 14.sp
             )

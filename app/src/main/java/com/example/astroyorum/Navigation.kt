@@ -32,6 +32,7 @@ import com.example.astroyorum.ui.splash.SplashScreen
 import com.example.astroyorum.ui.tarot.TarotScreen
 import com.example.astroyorum.ui.zodiac.ZodiacScreen
 import kotlinx.coroutines.launch
+import androidx.compose.material3.MaterialTheme
 
 @Composable
 fun MainNavigation() {
@@ -118,14 +119,14 @@ private fun AstroMainApp(
                 .fillMaxWidth()
                 .background(
                     Brush.verticalGradient(
-                        listOf(AstroBackground.copy(0f), AstroSurface)
+                        listOf(MaterialTheme.colorScheme.background.copy(0f), MaterialTheme.colorScheme.surface)
                     )
                 )
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(AstroSurface)
+                    .background(MaterialTheme.colorScheme.surface)
                     .border(
                         topStart = 0.dp, topEnd = 0.dp,
                         bottomStart = 0.dp, bottomEnd = 0.dp
@@ -160,7 +161,7 @@ private fun AstroMainApp(
                         Text(
                             text = label,
                             fontSize = 10.sp,
-                            color = if (isSelected) GoldenStardust else AstroTextSecondary,
+                            color = if (isSelected) GoldenStardust else MaterialTheme.colorScheme.onSurfaceVariant,
                             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                             textAlign = TextAlign.Center
                         )
@@ -194,8 +195,8 @@ private fun AstroMainApp(
         AlertDialog(
             onDismissRequest = { showExitDialog = false },
             title = { Text("Çıkış", color = GoldenStardust) },
-            text = { Text("Uygulamadan çıkmak istediğinize emin misiniz?", color = AstroDark) },
-            containerColor = AstroSurface,
+            text = { Text("Uygulamadan çıkmak istediğinize emin misiniz?", color = MaterialTheme.colorScheme.onBackground) },
+            containerColor = MaterialTheme.colorScheme.surface,
             confirmButton = {
                 TextButton(onClick = { activity?.finish() }) {
                     Text("Evet", color = RoseQuartz)

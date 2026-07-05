@@ -1,4 +1,4 @@
-﻿package com.example.astroyorum.ui.components
+package com.example.astroyorum.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -19,12 +19,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.astroyorum.data.ZodiacSign
 import com.example.astroyorum.theme.*
+import androidx.compose.material3.MaterialTheme
 
 // ─── Gradient Kart ────────────────────────────────────────────────────────────
 @Composable
 fun AstroCard(
     modifier: Modifier = Modifier,
-    gradientColors: List<Color> = listOf(AstroCard, AstroCardLight),
+    gradientColors: List<Color> = listOf(MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.colorScheme.outline),
     content: @Composable ColumnScope.() -> Unit
 ) {
     Card(
@@ -61,11 +62,11 @@ fun ZodiacSignCard(
     modifier: Modifier = Modifier,
     isSelected: Boolean = false
 ) {
-    val borderColor = if (isSelected) GoldenStardust else AstroCardLight
+    val borderColor = if (isSelected) GoldenStardust else MaterialTheme.colorScheme.outline
     val bgColors = if (isSelected)
         listOf(GoldenDim.copy(alpha = 0.3f), NebulaPurple.copy(alpha = 0.2f))
     else
-        listOf(AstroCard, AstroSurface)
+        listOf(MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.colorScheme.surface)
 
     Box(
         modifier = modifier
@@ -76,7 +77,7 @@ fun ZodiacSignCard(
             )
             .border(
                 1.dp,
-                if (isSelected) GoldenStardust else AstroCardLight,
+                if (isSelected) GoldenStardust else MaterialTheme.colorScheme.outline,
                 RoundedCornerShape(16.dp)
             )
             .clickable { onClick() }
@@ -94,7 +95,7 @@ fun ZodiacSignCard(
             Text(
                 text = sign.name,
                 style = MaterialTheme.typography.labelMedium,
-                color = if (isSelected) GoldenStardust else AstroText,
+                color = if (isSelected) GoldenStardust else MaterialTheme.colorScheme.onSurface,
                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                 textAlign = TextAlign.Center
             )
@@ -124,7 +125,7 @@ fun ScoreIndicator(
         Text(
             text = label,
             style = MaterialTheme.typography.labelSmall,
-            color = AstroTextSecondary
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         LinearProgressIndicator(
             progress = { score / 100f },
@@ -133,7 +134,7 @@ fun ScoreIndicator(
                 .height(6.dp)
                 .clip(RoundedCornerShape(3.dp)),
             color = color,
-            trackColor = AstroCardLight,
+            trackColor = MaterialTheme.colorScheme.outline,
         )
         Text(
             text = "%$score",
@@ -162,7 +163,7 @@ fun SectionHeader(
             Text(
                 text = subtitle,
                 style = MaterialTheme.typography.bodySmall,
-                color = AstroTextSecondary
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
@@ -178,7 +179,7 @@ fun StarDivider(modifier: Modifier = Modifier) {
     ) {
         HorizontalDivider(
             modifier = Modifier.weight(1f),
-            color = AstroCardLight
+            color = MaterialTheme.colorScheme.outline
         )
         Text(
             text = "  ✦  ",
@@ -187,7 +188,7 @@ fun StarDivider(modifier: Modifier = Modifier) {
         )
         HorizontalDivider(
             modifier = Modifier.weight(1f),
-            color = AstroCardLight
+            color = MaterialTheme.colorScheme.outline
         )
     }
 }

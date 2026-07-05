@@ -4,9 +4,6 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -22,6 +19,7 @@ import com.example.astroyorum.data.ZodiacDatabase
 import com.example.astroyorum.data.ZodiacSign
 import com.example.astroyorum.theme.*
 import com.example.astroyorum.ui.components.*
+import androidx.compose.material3.MaterialTheme
 
 @Composable
 fun ZodiacScreen(
@@ -34,14 +32,14 @@ fun ZodiacScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(AstroBackground)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         // Başlık
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    Brush.verticalGradient(listOf(AstroSurface, AstroBackground))
+                    Brush.verticalGradient(listOf(MaterialTheme.colorScheme.surface, MaterialTheme.colorScheme.background))
                 )
                 .padding(20.dp)
         ) {
@@ -62,31 +60,39 @@ fun ZodiacScreen(
                 val activity = androidx.compose.ui.platform.LocalContext.current as? android.app.Activity
                 var clickCount by remember { mutableIntStateOf(0) }
 
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(4),
-                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.height(260.dp)
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(ZodiacDatabase.signs) { sign ->
-                        ZodiacSignCard(
-                            sign = sign,
-                            isSelected = sign.id == selectedSign.id,
-                            onClick = {
-                                if (sign.id != selectedSign.id) {
-                                    clickCount++
-                                    if (clickCount % 5 == 0 && activity != null) {
-                                        // Her 5 tıklamada 1 geçiş reklamı göster
-                                        com.example.astroyorum.ads.AdManager.showInterstitialAd(activity) {
-                                            selectedSign = sign
+                    val chunkedSigns = ZodiacDatabase.signs.chunked(4)
+                    chunkedSigns.forEach { rowSigns ->
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            rowSigns.forEach { sign ->
+                                ZodiacSignCard(
+                                    sign = sign,
+                                    isSelected = sign.id == selectedSign.id,
+                                    modifier = Modifier.weight(1f),
+                                    onClick = {
+                                        if (sign.id != selectedSign.id) {
+                                            clickCount++
+                                            if (clickCount % 5 == 0 && activity != null) {
+                                                // Her 5 tıklamada 1 geçiş reklamı göster
+                                                com.example.astroyorum.ads.AdManager.showInterstitialAd(activity) {
+                                                    selectedSign = sign
+                                                }
+                                            } else {
+                                                selectedSign = sign
+                                            }
                                         }
-                                    } else {
-                                        selectedSign = sign
                                     }
-                                }
+                                )
                             }
-                        )
+                        }
                     }
                 }
             }
@@ -107,7 +113,7 @@ fun ZodiacScreen(
                                     Brush.linearGradient(
                                         listOf(
                                             elementColor(sign.element).copy(0.3f),
-                                            AstroCard
+                                            MaterialTheme.colorScheme.surfaceVariant
                                         )
                                     )
                                 )
@@ -122,13 +128,13 @@ fun ZodiacScreen(
                                     Text(
                                         text = sign.name,
                                         style = MaterialTheme.typography.displaySmall,
-                                        color = AstroDark,
+                                        color = MaterialTheme.colorScheme.onBackground,
                                         fontWeight = FontWeight.Bold
                                     )
                                     Text(
                                         text = "${sign.symbol} ${sign.dates}",
                                         style = MaterialTheme.typography.bodyMedium,
-                                        color = AstroTextSecondary
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                     Row(
                                         horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -246,7 +252,7 @@ private fun HoroscopeContent(
         Text(
             text = text,
             style = MaterialTheme.typography.bodyMedium,
-            color = AstroText,
+            color = MaterialTheme.colorScheme.onSurface,
             lineHeight = 24.sp
         )
     }
@@ -268,7 +274,7 @@ private fun LuckyItem(emoji: String, label: String, value: String) {
         Text(
             text = label,
             style = MaterialTheme.typography.labelSmall,
-            color = AstroTextSecondary
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
 }

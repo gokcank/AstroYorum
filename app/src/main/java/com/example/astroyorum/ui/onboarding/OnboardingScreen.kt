@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.astroyorum.data.*
 import com.example.astroyorum.theme.*
+import androidx.compose.material3.MaterialTheme
 
 @Composable
 fun OnboardingScreen(
@@ -46,7 +47,7 @@ fun OnboardingScreen(
             .fillMaxSize()
             .background(
                 brush = Brush.verticalGradient(
-                    listOf(AstroBackground, Color(0xFF150D30), AstroSurface)
+                    listOf(MaterialTheme.colorScheme.background, Color(0xFF150D30), MaterialTheme.colorScheme.surface)
                 )
             )
     ) {
@@ -85,7 +86,7 @@ fun OnboardingScreen(
             Text(
                 text = "Evrenin rehberliğiyle yaşa",
                 style = MaterialTheme.typography.bodyMedium,
-                color = AstroTextSecondary,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center
             )
 
@@ -170,7 +171,7 @@ fun OnboardingScreen(
                     modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = GoldenStardust,
-                        contentColor = AstroBackground
+                        contentColor = MaterialTheme.colorScheme.background
                     ),
                     shape = RoundedCornerShape(12.dp)
                 ) {
@@ -187,7 +188,7 @@ fun OnboardingScreen(
             Text(
                 text = "⚠️ Bu uygulama eğlence amaçlıdır.",
                 style = MaterialTheme.typography.labelSmall,
-                color = AstroTextSecondary,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center
             )
 
@@ -212,7 +213,7 @@ private fun StepIndicator(currentStep: Int, totalSteps: Int) {
                     .clip(RoundedCornerShape(2.dp))
                     .background(
                         if (isActive || isDone) GoldenStardust
-                        else AstroCardLight
+                        else MaterialTheme.colorScheme.outline
                     )
             )
         }
@@ -228,13 +229,13 @@ private fun StepOne(name: String, onNameChange: (String) -> Unit) {
         Text(
             text = "Merhaba! 👋",
             style = MaterialTheme.typography.headlineMedium,
-            color = AstroDark,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Bold
         )
         Text(
             text = "Seni nasıl çağıralım?",
             style = MaterialTheme.typography.bodyMedium,
-            color = AstroTextSecondary,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center
         )
         OutlinedTextField(
@@ -246,11 +247,11 @@ private fun StepOne(name: String, onNameChange: (String) -> Unit) {
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = GoldenStardust,
-                unfocusedBorderColor = AstroCardLight,
+                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
                 focusedLabelColor = GoldenStardust,
                 cursorColor = GoldenStardust,
-                focusedTextColor = AstroDark,
-                unfocusedTextColor = AstroText
+                focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                unfocusedTextColor = MaterialTheme.colorScheme.onSurface
             ),
             shape = RoundedCornerShape(12.dp)
         )
@@ -271,13 +272,13 @@ private fun StepTwo(
         Text(
             text = "Doğum Tarihin 🎂",
             style = MaterialTheme.typography.headlineMedium,
-            color = AstroDark,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Bold
         )
         Text(
             text = "Güneş, Ay ve Yükselen burcunu hesaplayalım",
             style = MaterialTheme.typography.bodySmall,
-            color = AstroTextSecondary,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center
         )
 
@@ -295,7 +296,7 @@ private fun StepTwo(
         Text(
             text = "Doğum Saati (yaklaşık olabilir)",
             style = MaterialTheme.typography.labelMedium,
-            color = AstroTextSecondary
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -352,11 +353,11 @@ private fun NumberField(
         modifier = modifier,
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = GoldenStardust,
-            unfocusedBorderColor = AstroCardLight,
+            unfocusedBorderColor = MaterialTheme.colorScheme.outline,
             focusedLabelColor = GoldenStardust,
             cursorColor = GoldenStardust,
-            focusedTextColor = AstroDark,
-            unfocusedTextColor = AstroText
+            focusedTextColor = MaterialTheme.colorScheme.onSurface,
+            unfocusedTextColor = MaterialTheme.colorScheme.onSurface
         ),
         shape = RoundedCornerShape(12.dp)
     )
@@ -371,13 +372,13 @@ private fun StepThree(city: String, gender: String, onCityChange: (String) -> Un
         Text(
             text = "Doğum Şehrin 🌍",
             style = MaterialTheme.typography.headlineMedium,
-            color = AstroDark,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Bold
         )
         Text(
             text = "Yükselen burcun için isteğe bağlıdır",
             style = MaterialTheme.typography.bodySmall,
-            color = AstroTextSecondary
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         OutlinedTextField(
             value = city,
@@ -388,11 +389,11 @@ private fun StepThree(city: String, gender: String, onCityChange: (String) -> Un
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = GoldenStardust,
-                unfocusedBorderColor = AstroCardLight,
+                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
                 focusedLabelColor = GoldenStardust,
                 cursorColor = GoldenStardust,
-                focusedTextColor = AstroDark,
-                unfocusedTextColor = AstroText
+                focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                unfocusedTextColor = MaterialTheme.colorScheme.onSurface
             ),
             shape = RoundedCornerShape(12.dp)
         )
@@ -401,7 +402,7 @@ private fun StepThree(city: String, gender: String, onCityChange: (String) -> Un
         Text(
             text = "Hızlı seç:",
             style = MaterialTheme.typography.labelMedium,
-            color = AstroTextSecondary,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.align(Alignment.Start)
         )
         val cities = listOf("İstanbul", "Ankara", "İzmir", "Antalya", "Bursa", "Adana")
@@ -415,10 +416,10 @@ private fun StepThree(city: String, gender: String, onCityChange: (String) -> Un
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(8.dp))
-                        .background(AstroCard)
+                        .background(MaterialTheme.colorScheme.surfaceVariant)
                         .border(
                             1.dp,
-                            if (city == c) GoldenStardust else AstroCardLight,
+                            if (city == c) GoldenStardust else MaterialTheme.colorScheme.outline,
                             RoundedCornerShape(8.dp)
                         )
                         .clickable { onCityChange(c) }
@@ -428,7 +429,7 @@ private fun StepThree(city: String, gender: String, onCityChange: (String) -> Un
                     Text(
                         text = c,
                         style = MaterialTheme.typography.labelSmall,
-                        color = if (city == c) GoldenStardust else AstroText,
+                        color = if (city == c) GoldenStardust else MaterialTheme.colorScheme.onSurface,
                         textAlign = TextAlign.Center
                     )
                 }
@@ -439,7 +440,7 @@ private fun StepThree(city: String, gender: String, onCityChange: (String) -> Un
         Text(
             text = "Cinsiyet (Yapay zeka analizleri için)",
             style = MaterialTheme.typography.labelMedium,
-            color = AstroTextSecondary,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.align(Alignment.Start)
         )
         val genders = listOf("Kadın", "Erkek", "Belirtmek İstemiyorum")
@@ -452,10 +453,10 @@ private fun StepThree(city: String, gender: String, onCityChange: (String) -> Un
                     modifier = Modifier
                         .weight(1f)
                         .clip(RoundedCornerShape(8.dp))
-                        .background(AstroCard)
+                        .background(MaterialTheme.colorScheme.surfaceVariant)
                         .border(
                             1.dp,
-                            if (gender == g) GoldenStardust else AstroCardLight,
+                            if (gender == g) GoldenStardust else MaterialTheme.colorScheme.outline,
                             RoundedCornerShape(8.dp)
                         )
                         .clickable { onGenderChange(g) }
@@ -465,7 +466,7 @@ private fun StepThree(city: String, gender: String, onCityChange: (String) -> Un
                     Text(
                         text = g,
                         style = MaterialTheme.typography.labelSmall,
-                        color = if (gender == g) GoldenStardust else AstroText,
+                        color = if (gender == g) GoldenStardust else MaterialTheme.colorScheme.onSurface,
                         textAlign = TextAlign.Center
                     )
                 }

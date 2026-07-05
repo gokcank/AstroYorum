@@ -30,6 +30,7 @@ import com.example.astroyorum.theme.*
 import com.example.astroyorum.ui.components.*
 import kotlin.math.cos
 import kotlin.math.sin
+import androidx.compose.material3.MaterialTheme
 
 @Composable
 fun BirthChartScreen(
@@ -42,7 +43,7 @@ fun BirthChartScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(AstroBackground),
+            .background(MaterialTheme.colorScheme.background),
         contentPadding = PaddingValues(bottom = 80.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -50,7 +51,7 @@ fun BirthChartScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Brush.verticalGradient(listOf(AstroSurface, AstroBackground)))
+                    .background(Brush.verticalGradient(listOf(MaterialTheme.colorScheme.surface, MaterialTheme.colorScheme.background)))
                     .padding(20.dp)
             ) {
                 Column {
@@ -63,7 +64,7 @@ fun BirthChartScreen(
                     Text(
                         text = "${userProfile.name} · ${userProfile.birthDay}/${userProfile.birthMonth}/${userProfile.birthYear}",
                         style = MaterialTheme.typography.bodySmall,
-                        color = AstroTextSecondary
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }
@@ -96,7 +97,7 @@ fun BirthChartScreen(
                 ).forEach { (emoji, label, signName) ->
                     AstroCard(
                         modifier = Modifier.weight(1f),
-                        gradientColors = listOf(NebulaPurple.copy(0.2f), AstroCard)
+                        gradientColors = listOf(NebulaPurple.copy(0.2f), MaterialTheme.colorScheme.surfaceVariant)
                     ) {
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
@@ -106,7 +107,7 @@ fun BirthChartScreen(
                             Text(
                                 text = label,
                                 style = MaterialTheme.typography.labelSmall,
-                                color = AstroTextSecondary
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                             Text(
                                 text = ZodiacDatabase.signs.find { it.name == signName }?.emoji ?: "⭐",
@@ -166,7 +167,7 @@ fun BirthChartScreen(
                         Text(
                             text = name,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = AstroTextSecondary,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.weight(1f)
                         )
                         Row(
@@ -183,7 +184,7 @@ fun BirthChartScreen(
                         }
                     }
                     if (symbol != "♇") {
-                        HorizontalDivider(color = AstroCardLight.copy(0.4f))
+                        HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(0.4f))
                     }
                 }
             }
@@ -196,13 +197,13 @@ fun BirthChartScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
                     .clip(RoundedCornerShape(12.dp))
-                    .background(AstroCard)
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
                     .padding(16.dp)
             ) {
                 Text(
                     text = "ℹ️ Bu harita basitleştirilmiş bir hesaplamadır. Kesin sonuçlar için doğum saati ve şehir bilgisi gereklidir. Eğlence amaçlıdır.",
                     style = MaterialTheme.typography.labelSmall,
-                    color = AstroTextSecondary,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center
                 )
             }
@@ -221,7 +222,7 @@ private fun NatalChartCanvas(chartData: BirthChartData) {
             .clip(CircleShape)
             .background(
                 Brush.radialGradient(
-                    listOf(NebulaPurple.copy(0.2f), AstroBackground, Color(0xFF0A0515))
+                    listOf(NebulaPurple.copy(0.2f), MaterialTheme.colorScheme.background, Color(0xFF0A0515))
                 )
             )
             .border(2.dp, GoldenStardust.copy(0.4f), CircleShape),
