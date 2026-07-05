@@ -5,7 +5,6 @@
 ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
 ![Llama 3](https://img.shields.io/badge/Llama_3.3_70B-0466C8?style=for-the-badge&logo=meta&logoColor=white)
 ![Groq](https://img.shields.io/badge/Groq-F55036?style=for-the-badge&logo=groq&logoColor=white)
-
 ![License](https://img.shields.io/github/license/gokcank/AstroYorum?style=for-the-badge)
 ![Version](https://img.shields.io/badge/Version-v1.0.2_(Closed_Beta)-blue?style=for-the-badge)
 
