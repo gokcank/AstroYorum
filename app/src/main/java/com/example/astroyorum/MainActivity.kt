@@ -10,19 +10,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.astroyorum.theme.AstroYorumTheme
 
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.ktx.Firebase
-
 class MainActivity : ComponentActivity() {
-  private lateinit var firebaseAnalytics: FirebaseAnalytics
-
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    
-    // Obtain the FirebaseAnalytics instance.
-    firebaseAnalytics = Firebase.analytics
-
     enableEdgeToEdge()
     setContent {
       AstroYorumTheme { Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) { MainNavigation() } }

@@ -65,7 +65,10 @@ data class BirthChartData(
 data class ZodiacScores(
     val love: Int = 50,
     val career: Int = 50,
-    val health: Int = 50
+    val health: Int = 50,
+    val luckyNumber: Int = 0,
+    val luckyStone: String = "",
+    val luckyColor: String = ""
 )
 
 data class DailyAstroData(
@@ -83,6 +86,7 @@ data class UserProfile(
     val birthHour: Int = 12,
     val birthMinute: Int = 0,
     val birthCity: String = "",
+    val gender: String = "Belirtmek İstemiyorum",
     val zodiacSignId: Int = 0
 )
 

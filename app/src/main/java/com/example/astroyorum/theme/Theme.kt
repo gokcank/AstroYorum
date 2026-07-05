@@ -1,48 +1,48 @@
 package com.example.astroyorum.theme
 
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-// Kozmik karanlık tema - her zaman dark (dinamik renk kapalı)
-private val CosmicDarkColorScheme = darkColorScheme(
+// Holografik aydınlık tema
+private val AstroLightColorScheme = lightColorScheme(
     primary = GoldenStardust,
-    onPrimary = CosmicDeepPurple,
+    onPrimary = AstroBackground,
     primaryContainer = GoldenDim,
     onPrimaryContainer = GoldenStardust,
 
     secondary = NebulaPurple,
-    onSecondary = StarWhite,
-    secondaryContainer = CosmicCard,
-    onSecondaryContainer = StellarLavender,
+    onSecondary = AstroDark,
+    secondaryContainer = AstroCard,
+    onSecondaryContainer = AstroLavender,
 
     tertiary = AquaGlow,
-    onTertiary = CosmicDeepPurple,
-    tertiaryContainer = CosmicCardLight,
+    onTertiary = AstroBackground,
+    tertiaryContainer = AstroCardLight,
     onTertiaryContainer = AquaGlow,
 
-    background = CosmicDeepPurple,
-    onBackground = MoonSilver,
+    background = AstroBackground,
+    onBackground = AstroText,
 
-    surface = CosmicMidnight,
-    onSurface = MoonSilver,
-    surfaceVariant = CosmicCard,
-    onSurfaceVariant = CometGray,
+    surface = AstroSurface,
+    onSurface = AstroText,
+    surfaceVariant = AstroCard,
+    onSurfaceVariant = AstroTextSecondary,
 
-    outline = CosmicCardLight,
-    outlineVariant = CosmicCard,
+    outline = AstroCardLight,
+    outlineVariant = AstroCard,
 
     error = Color(0xFFFF6B6B),
-    onError = CosmicDeepPurple,
+    onError = AstroBackground,
 )
 
 @Composable
 fun AstroYorumTheme(
     content: @Composable () -> Unit,
 ) {
-    MaterialTheme(
-        colorScheme = CosmicDarkColorScheme,
+    androidx.compose.material3.MaterialTheme(
+        colorScheme = AstroLightColorScheme,
         typography = Typography,
         content = content
     )

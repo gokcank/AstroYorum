@@ -1,4 +1,4 @@
-package com.example.astroyorum.ui.components
+﻿package com.example.astroyorum.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -22,9 +22,9 @@ import com.example.astroyorum.theme.*
 
 // ─── Gradient Kart ────────────────────────────────────────────────────────────
 @Composable
-fun CosmicCard(
+fun AstroCard(
     modifier: Modifier = Modifier,
-    gradientColors: List<Color> = listOf(CosmicCard, CosmicCardLight),
+    gradientColors: List<Color> = listOf(AstroCard, AstroCardLight),
     content: @Composable ColumnScope.() -> Unit
 ) {
     Card(
@@ -61,11 +61,11 @@ fun ZodiacSignCard(
     modifier: Modifier = Modifier,
     isSelected: Boolean = false
 ) {
-    val borderColor = if (isSelected) GoldenStardust else CosmicCardLight
+    val borderColor = if (isSelected) GoldenStardust else AstroCardLight
     val bgColors = if (isSelected)
         listOf(GoldenDim.copy(alpha = 0.3f), NebulaPurple.copy(alpha = 0.2f))
     else
-        listOf(CosmicCard, CosmicMidnight)
+        listOf(AstroCard, AstroSurface)
 
     Box(
         modifier = modifier
@@ -76,7 +76,7 @@ fun ZodiacSignCard(
             )
             .border(
                 1.dp,
-                if (isSelected) GoldenStardust else CosmicCardLight,
+                if (isSelected) GoldenStardust else AstroCardLight,
                 RoundedCornerShape(16.dp)
             )
             .clickable { onClick() }
@@ -88,13 +88,13 @@ fun ZodiacSignCard(
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             Text(
-                text = sign.emoji,
-                fontSize = 28.sp
+                text = sign.symbol,
+                fontSize = 32.sp
             )
             Text(
                 text = sign.name,
                 style = MaterialTheme.typography.labelMedium,
-                color = if (isSelected) GoldenStardust else MoonSilver,
+                color = if (isSelected) GoldenStardust else AstroText,
                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                 textAlign = TextAlign.Center
             )
@@ -124,7 +124,7 @@ fun ScoreIndicator(
         Text(
             text = label,
             style = MaterialTheme.typography.labelSmall,
-            color = CometGray
+            color = AstroTextSecondary
         )
         LinearProgressIndicator(
             progress = { score / 100f },
@@ -133,7 +133,7 @@ fun ScoreIndicator(
                 .height(6.dp)
                 .clip(RoundedCornerShape(3.dp)),
             color = color,
-            trackColor = CosmicCardLight,
+            trackColor = AstroCardLight,
         )
         Text(
             text = "%$score",
@@ -162,7 +162,7 @@ fun SectionHeader(
             Text(
                 text = subtitle,
                 style = MaterialTheme.typography.bodySmall,
-                color = CometGray
+                color = AstroTextSecondary
             )
         }
     }
@@ -178,7 +178,7 @@ fun StarDivider(modifier: Modifier = Modifier) {
     ) {
         HorizontalDivider(
             modifier = Modifier.weight(1f),
-            color = CosmicCardLight
+            color = AstroCardLight
         )
         Text(
             text = "  ✦  ",
@@ -187,7 +187,7 @@ fun StarDivider(modifier: Modifier = Modifier) {
         )
         HorizontalDivider(
             modifier = Modifier.weight(1f),
-            color = CosmicCardLight
+            color = AstroCardLight
         )
     }
 }
@@ -198,3 +198,4 @@ data class BottomNavItem(
     val emoji: String,
     val route: Any
 )
+

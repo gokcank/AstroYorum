@@ -1,4 +1,4 @@
-package com.example.astroyorum.ui.tarot
+﻿package com.example.astroyorum.ui.tarot
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
@@ -39,14 +39,14 @@ fun TarotScreen(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(CosmicDeepPurple)
+            .background(AstroBackground)
     ) {
         // Başlık
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    Brush.verticalGradient(listOf(Color(0xFF1A0A2E), CosmicDeepPurple))
+                    Brush.verticalGradient(listOf(Color(0xFF1A0A2E), AstroBackground))
                 )
                 .padding(20.dp)
         ) {
@@ -54,13 +54,13 @@ fun TarotScreen(modifier: Modifier = Modifier) {
                 Text(
                     text = "🃏 Tarot",
                     style = MaterialTheme.typography.headlineMedium,
-                    color = StellarLavender,
+                    color = AstroLavender,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
                     text = "Evrenin mesajlarını al",
                     style = MaterialTheme.typography.bodySmall,
-                    color = CometGray
+                    color = AstroTextSecondary
                 )
             }
         }
@@ -121,23 +121,23 @@ fun TarotScreen(modifier: Modifier = Modifier) {
 
             // ─── Major Arcana hakkında bilgi ────────────────────────────────
             item {
-                CosmicCard(
+                AstroCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
-                    gradientColors = listOf(NebulaPurple.copy(0.2f), CosmicCard)
+                    gradientColors = listOf(NebulaPurple.copy(0.2f), AstroCard)
                 ) {
                     Text(
                         text = "🔮 Tarot Hakkında",
                         style = MaterialTheme.typography.titleMedium,
-                        color = StellarLavender,
+                        color = AstroLavender,
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(Modifier.height(8.dp))
                     Text(
                         text = "Tarot destesi 78 karttan oluşur: 22 Büyük Arkana (Major Arcana) ve 56 Küçük Arkana (Minor Arcana). Her kart evrensel arketipleri ve yaşam deneyimlerini temsil eder.\n\nKartlar, içsel bilgeliğinizle bağlantı kurmanıza yardımcı olan aynalardır. Eğlence amaçlı yorumlanmalıdır.",
                         style = MaterialTheme.typography.bodySmall,
-                        color = CometGray
+                        color = AstroTextSecondary
                     )
                 }
             }
@@ -153,11 +153,11 @@ private fun ModeChip(
         modifier = modifier
             .clip(RoundedCornerShape(12.dp))
             .background(
-                if (isSelected) NebulaPurple.copy(0.4f) else CosmicCard
+                if (isSelected) NebulaPurple.copy(0.4f) else AstroCard
             )
             .border(
                 1.dp,
-                if (isSelected) NebulaPurple else CosmicCardLight,
+                if (isSelected) NebulaPurple else AstroCardLight,
                 RoundedCornerShape(12.dp)
             )
             .clickable { onClick() }
@@ -167,7 +167,7 @@ private fun ModeChip(
         Text(
             text = text,
             style = MaterialTheme.typography.labelMedium,
-            color = if (isSelected) StellarLavender else CometGray,
+            color = if (isSelected) AstroLavender else AstroTextSecondary,
             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
             textAlign = TextAlign.Center
         )
@@ -189,13 +189,13 @@ private fun SingleCardSection(
         Text(
             text = "Günün Mesajı",
             style = MaterialTheme.typography.headlineSmall,
-            color = StarWhite,
+            color = AstroDark,
             fontWeight = FontWeight.Bold
         )
         Text(
             text = if (!isRevealed) "Kartına odaklan ve dokun" else card.name,
             style = MaterialTheme.typography.bodyMedium,
-            color = CometGray,
+            color = AstroTextSecondary,
             textAlign = TextAlign.Center
         )
         Spacer(Modifier.height(24.dp))
@@ -243,9 +243,9 @@ private fun AnimatedTarotCard(
             .clip(RoundedCornerShape(16.dp))
             .background(
                 if (rotation < 90f)
-                    Brush.verticalGradient(listOf(NebulaPurple.copy(0.5f), AstralViolet.copy(0.3f), CosmicCard))
+                    Brush.verticalGradient(listOf(NebulaPurple.copy(0.5f), AstralViolet.copy(0.3f), AstroCard))
                 else
-                    Brush.verticalGradient(listOf(CosmicCard, CosmicMidnight))
+                    Brush.verticalGradient(listOf(AstroCard, AstroSurface))
             )
             .border(
                 2.dp,
@@ -273,12 +273,13 @@ private fun AnimatedTarotCard(
                 Text(
                     text = card.arcana + " Arkana",
                     style = MaterialTheme.typography.labelSmall,
-                    color = CometGray
+                    color = AstroTextSecondary
                 )
             }
         } else {
             // Arka yüz - kart kapalı
             Column(
+                modifier = Modifier.graphicsLayer { rotationY = 180f },
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -296,12 +297,12 @@ private fun AnimatedTarotCard(
 
 @Composable
 private fun CardDetails(card: TarotCard) {
-    CosmicCard(
+    AstroCard(
         modifier = Modifier.fillMaxWidth(),
-        gradientColors = listOf(NebulaPurple.copy(0.2f), CosmicCard)
+        gradientColors = listOf(NebulaPurple.copy(0.2f), AstroCard)
     ) {
         Text(
-            text = "✅ Düz Anlam",
+            text = "✅ Olumlu",
             style = MaterialTheme.typography.labelLarge,
             color = AquaGlow,
             fontWeight = FontWeight.Bold
@@ -310,11 +311,11 @@ private fun CardDetails(card: TarotCard) {
         Text(
             text = card.meaningUpright,
             style = MaterialTheme.typography.bodyMedium,
-            color = MoonSilver
+            color = AstroText
         )
         Spacer(Modifier.height(12.dp))
         Text(
-            text = "🔄 Ters Anlam",
+            text = "🔄 Olumsuz",
             style = MaterialTheme.typography.labelLarge,
             color = RoseQuartz,
             fontWeight = FontWeight.Bold
@@ -323,7 +324,7 @@ private fun CardDetails(card: TarotCard) {
         Text(
             text = card.meaningReversed,
             style = MaterialTheme.typography.bodyMedium,
-            color = MoonSilver
+            color = AstroText
         )
         Spacer(Modifier.height(12.dp))
         StarDivider()
@@ -377,7 +378,7 @@ private fun ThreeCardSection(
         Text(
             text = "Geçmiş • Şimdi • Gelecek",
             style = MaterialTheme.typography.headlineSmall,
-            color = StarWhite,
+            color = AstroDark,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
@@ -421,7 +422,7 @@ private fun ThreeCardSection(
                 onClick = { showAdPrompt = true },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = NebulaPurple,
-                    contentColor = StarWhite
+                    contentColor = AstroDark
                 ),
                 shape = RoundedCornerShape(12.dp)
             ) {
@@ -442,8 +443,8 @@ private fun ThreeCardSection(
         AlertDialog(
             onDismissRequest = { showAdPrompt = false },
             title = { Text("Evrenin Mesajı", color = GoldenStardust) },
-            text = { Text("Kartların derin anlamını öğrenmek için kısa bir video izleyerek bize destek olur musunuz?", color = StarWhite) },
-            containerColor = CosmicCard,
+            text = { Text("Kartların derin anlamını öğrenmek için kısa bir video izleyerek bize destek olur musunuz?", color = AstroDark) },
+            containerColor = AstroCard,
             confirmButton = {
                 TextButton(onClick = {
                     showAdPrompt = false
@@ -458,7 +459,7 @@ private fun ThreeCardSection(
             },
             dismissButton = {
                 TextButton(onClick = { showAdPrompt = false }) {
-                    Text("Vazgeç", color = CometGray)
+                    Text("Vazgeç", color = AstroTextSecondary)
                 }
             }
         )
@@ -473,7 +474,7 @@ private fun ThreeCardSection(
                     Text("Kapat", color = AquaGlow)
                 }
             },
-            containerColor = CosmicMidnight,
+            containerColor = AstroSurface,
             title = {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(text = selectedCardDetails!!.emoji, fontSize = 28.sp)
@@ -517,13 +518,13 @@ private fun AnimatedMiniCardView(card: TarotCard, isRevealed: Boolean, onClick: 
             .clip(RoundedCornerShape(12.dp))
             .background(
                 if (rotation < 90f)
-                    Brush.verticalGradient(listOf(NebulaPurple.copy(0.4f), CosmicCard))
+                    Brush.verticalGradient(listOf(NebulaPurple.copy(0.4f), AstroCard))
                 else
-                    Brush.verticalGradient(listOf(CosmicCard, CosmicMidnight))
+                    Brush.verticalGradient(listOf(AstroCard, AstroSurface))
             )
             .border(
                 1.dp,
-                if (isRevealed) GoldenStardust.copy(0.6f) else CosmicCardLight,
+                if (isRevealed) GoldenStardust.copy(0.6f) else AstroCardLight,
                 RoundedCornerShape(12.dp)
             )
             .clickable { onClick() },
@@ -549,7 +550,10 @@ private fun AnimatedMiniCardView(card: TarotCard, isRevealed: Boolean, onClick: 
                 )
             }
         } else {
-            Text(text = "🌙", fontSize = 28.sp)
+            Box(modifier = Modifier.graphicsLayer { rotationY = 180f }) {
+                Text(text = "🌙", fontSize = 28.sp)
+            }
         }
     }
 }
+

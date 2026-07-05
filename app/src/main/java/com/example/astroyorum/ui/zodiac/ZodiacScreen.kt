@@ -1,4 +1,4 @@
-package com.example.astroyorum.ui.zodiac
+﻿package com.example.astroyorum.ui.zodiac
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
@@ -34,14 +34,14 @@ fun ZodiacScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(CosmicDeepPurple)
+            .background(AstroBackground)
     ) {
         // Başlık
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    Brush.verticalGradient(listOf(CosmicMidnight, CosmicDeepPurple))
+                    Brush.verticalGradient(listOf(AstroSurface, AstroBackground))
                 )
                 .padding(20.dp)
         ) {
@@ -67,7 +67,7 @@ fun ZodiacScreen(
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.height(240.dp)
+                    modifier = Modifier.height(260.dp)
                 ) {
                     items(ZodiacDatabase.signs) { sign ->
                         ZodiacSignCard(
@@ -76,8 +76,8 @@ fun ZodiacScreen(
                             onClick = {
                                 if (sign.id != selectedSign.id) {
                                     clickCount++
-                                    if (clickCount % 3 == 0 && activity != null) {
-                                        // Her 3 tıklamada 1 geçiş reklamı göster
+                                    if (clickCount % 5 == 0 && activity != null) {
+                                        // Her 5 tıklamada 1 geçiş reklamı göster
                                         com.example.astroyorum.ads.AdManager.showInterstitialAd(activity) {
                                             selectedSign = sign
                                         }
@@ -107,7 +107,7 @@ fun ZodiacScreen(
                                     Brush.linearGradient(
                                         listOf(
                                             elementColor(sign.element).copy(0.3f),
-                                            CosmicCard
+                                            AstroCard
                                         )
                                     )
                                 )
@@ -117,18 +117,18 @@ fun ZodiacScreen(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(16.dp)
                             ) {
-                                Text(text = sign.emoji, fontSize = 56.sp)
+                                Text(text = sign.symbol, fontSize = 64.sp)
                                 Column {
                                     Text(
                                         text = sign.name,
                                         style = MaterialTheme.typography.displaySmall,
-                                        color = StarWhite,
+                                        color = AstroDark,
                                         fontWeight = FontWeight.Bold
                                     )
                                     Text(
                                         text = "${sign.symbol} ${sign.dates}",
                                         style = MaterialTheme.typography.bodyMedium,
-                                        color = CometGray
+                                        color = AstroTextSecondary
                                     )
                                     Row(
                                         horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -160,7 +160,17 @@ fun ZodiacScreen(
 
             // ─── Şans Bilgileri ─────────────────────────────────────────────
             item {
-                CosmicCard(
+                val currentScores = if (horoscopeUiState is com.example.astroyorum.ui.main.HoroscopeUiState.Success) {
+                    horoscopeUiState.data.scores[selectedSign.englishName] ?: com.example.astroyorum.data.ZodiacScores(selectedSign.loveScore, selectedSign.careerScore, selectedSign.healthScore)
+                } else {
+                    com.example.astroyorum.data.ZodiacScores(selectedSign.loveScore, selectedSign.careerScore, selectedSign.healthScore)
+                }
+
+                val luckyNumber = if (currentScores.luckyNumber > 0) currentScores.luckyNumber else selectedSign.luckyNumber
+                val luckyStone = currentScores.luckyStone.ifEmpty { selectedSign.luckyStone }
+                val luckyColor = currentScores.luckyColor.ifEmpty { selectedSign.luckyColor }
+
+                AstroCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -171,9 +181,9 @@ fun ZodiacScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        LuckyItem("🔢", "Sayı", selectedSign.luckyNumber.toString())
-                        LuckyItem("💎", "Taş", selectedSign.luckyStone)
-                        LuckyItem("🎨", "Renk", selectedSign.luckyColor)
+                        LuckyItem("🔢", "Sayı", luckyNumber.toString())
+                        LuckyItem("💎", "Taş", luckyStone)
+                        LuckyItem("🎨", "Renk", luckyColor)
                     }
                 }
             }
@@ -186,7 +196,7 @@ fun ZodiacScreen(
                     com.example.astroyorum.data.ZodiacScores(selectedSign.loveScore, selectedSign.careerScore, selectedSign.healthScore)
                 }
 
-                CosmicCard(
+                AstroCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -228,7 +238,7 @@ private fun HoroscopeContent(
         is com.example.astroyorum.ui.main.HoroscopeUiState.Error -> horoscopeUiState.message
     }
 
-    CosmicCard(
+    AstroCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -236,7 +246,7 @@ private fun HoroscopeContent(
         Text(
             text = text,
             style = MaterialTheme.typography.bodyMedium,
-            color = MoonSilver,
+            color = AstroText,
             lineHeight = 24.sp
         )
     }
@@ -258,7 +268,7 @@ private fun LuckyItem(emoji: String, label: String, value: String) {
         Text(
             text = label,
             style = MaterialTheme.typography.labelSmall,
-            color = CometGray
+            color = AstroTextSecondary
         )
     }
 }
@@ -270,3 +280,4 @@ private fun elementColor(element: String) = when (element) {
     "Su" -> WaterElement
     else -> NebulaPurple
 }
+

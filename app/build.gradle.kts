@@ -2,7 +2,6 @@ plugins {
   alias(libs.plugins.android.application)
   alias(libs.plugins.compose.compiler)
   alias(libs.plugins.kotlin.serialization)
-  alias(libs.plugins.google.services)
 }
 
 import java.util.Properties
@@ -20,6 +19,8 @@ val admobInterstitialId = localProperties.getProperty("ADMOB_INTERSTITIAL_ID") ?
 val admobRewardedId = localProperties.getProperty("ADMOB_REWARDED_ID") ?: ""
 val keystorePasswordStr = localProperties.getProperty("KEYSTORE_PASSWORD") ?: ""
 val keyPasswordStr = localProperties.getProperty("KEY_PASSWORD") ?: ""
+val supabaseUrl = localProperties.getProperty("SUPABASE_URL") ?: ""
+val supabaseAnonKey = localProperties.getProperty("SUPABASE_ANON_KEY") ?: ""
 
 android {
     namespace = "com.example.astroyorum"
@@ -35,6 +36,8 @@ android {
         buildConfigField("String", "ADMOB_BANNER_ID", "\"${admobBannerId}\"")
         buildConfigField("String", "ADMOB_INTERSTITIAL_ID", "\"${admobInterstitialId}\"")
         buildConfigField("String", "ADMOB_REWARDED_ID", "\"${admobRewardedId}\"")
+        buildConfigField("String", "SUPABASE_URL", "\"${supabaseUrl}\"")
+        buildConfigField("String", "SUPABASE_ANON_KEY", "\"${supabaseAnonKey}\"")
     }
 
     signingConfigs {
@@ -125,9 +128,9 @@ dependencies {
   implementation(libs.coil.compose)
   implementation(libs.coil.network.okhttp)
 
-  // Firebase
-  implementation(platform(libs.firebase.bom))
-  implementation(libs.firebase.analytics)
-  implementation(libs.firebase.firestore)
+  // Supabase
+  implementation(platform(libs.supabase.bom))
+  implementation(libs.supabase.postgrest)
+  implementation(libs.ktor.client.android)
 }
 

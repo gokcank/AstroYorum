@@ -1,4 +1,4 @@
-package com.example.astroyorum.ui.splash
+﻿package com.example.astroyorum.ui.splash
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -13,9 +13,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.astroyorum.theme.CometGray
-import com.example.astroyorum.theme.CosmicDeepPurple
-import com.example.astroyorum.theme.CosmicMidnight
+import com.example.astroyorum.theme.AstroTextSecondary
+import com.example.astroyorum.theme.AstroBackground
+import com.example.astroyorum.theme.AstroSurface
 import com.example.astroyorum.theme.GoldenStardust
 import kotlinx.coroutines.delay
 
@@ -39,7 +39,7 @@ fun SplashScreen(onSplashFinished: () -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .background(
-                Brush.verticalGradient(listOf(CosmicMidnight, CosmicDeepPurple))
+                Brush.verticalGradient(listOf(AstroSurface, AstroBackground))
             ),
         contentAlignment = Alignment.Center
     ) {
@@ -55,16 +55,17 @@ fun SplashScreen(onSplashFinished: () -> Unit) {
             )
             
             Text(
-                text = "AstroYorum v1.0.1 (Internal Testing)",
+                text = "AstroYorum",
                 style = MaterialTheme.typography.displayMedium,
                 color = GoldenStardust.copy(alpha = alphaAnim),
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
             )
             
             Text(
-                text = "v1.0 (DEBUG)",
+                text = "v1.0.2",
                 style = MaterialTheme.typography.titleMedium,
-                color = CometGray.copy(alpha = alphaAnim),
+                color = AstroTextSecondary.copy(alpha = alphaAnim),
                 modifier = Modifier.padding(top = 4.dp)
             )
 
@@ -80,7 +81,7 @@ fun SplashScreen(onSplashFinished: () -> Unit) {
         Text(
             text = "Yasal Uyarı ve Sorumluluk Reddi: Bu uygulama yalnızca eğlence ve kişisel gelişim amaçlıdır. Astroloji ve tarot okumaları kesin yargılar içermez, tıbbi, hukuki veya finansal tavsiye yerine geçemez.",
             style = MaterialTheme.typography.labelSmall,
-            color = CometGray.copy(alpha = alphaAnim * 0.6f),
+            color = AstroTextSecondary.copy(alpha = alphaAnim * 0.6f),
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -88,3 +89,4 @@ fun SplashScreen(onSplashFinished: () -> Unit) {
         )
     }
 }
+

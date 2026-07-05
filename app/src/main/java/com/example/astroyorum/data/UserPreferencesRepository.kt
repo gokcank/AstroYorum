@@ -23,6 +23,7 @@ class UserPreferencesRepository(private val context: Context) {
         val KEY_BIRTH_HOUR = intPreferencesKey("birth_hour")
         val KEY_BIRTH_MINUTE = intPreferencesKey("birth_minute")
         val KEY_BIRTH_CITY = stringPreferencesKey("birth_city")
+        val KEY_GENDER = stringPreferencesKey("gender")
         val KEY_ZODIAC_ID = intPreferencesKey("zodiac_id")
         val KEY_ONBOARDING_DONE = intPreferencesKey("onboarding_done")
     }
@@ -36,6 +37,7 @@ class UserPreferencesRepository(private val context: Context) {
             birthHour = prefs[KEY_BIRTH_HOUR] ?: 12,
             birthMinute = prefs[KEY_BIRTH_MINUTE] ?: 0,
             birthCity = prefs[KEY_BIRTH_CITY] ?: "",
+            gender = prefs[KEY_GENDER] ?: "Belirtmek İstemiyorum",
             zodiacSignId = prefs[KEY_ZODIAC_ID] ?: 0
         )
     }
@@ -53,6 +55,7 @@ class UserPreferencesRepository(private val context: Context) {
             prefs[KEY_BIRTH_HOUR] = profile.birthHour
             prefs[KEY_BIRTH_MINUTE] = profile.birthMinute
             prefs[KEY_BIRTH_CITY] = profile.birthCity
+            prefs[KEY_GENDER] = profile.gender
             prefs[KEY_ZODIAC_ID] = calculateZodiacId(profile.birthDay, profile.birthMonth)
             prefs[KEY_ONBOARDING_DONE] = 1
         }

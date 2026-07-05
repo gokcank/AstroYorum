@@ -1,4 +1,4 @@
-package com.example.astroyorum.ui.moon
+﻿package com.example.astroyorum.ui.moon
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -51,7 +51,7 @@ fun MoonScreen(
             .fillMaxSize()
             .background(
                 Brush.verticalGradient(
-                    listOf(Color(0xFF060D1F), CosmicDeepPurple, CosmicMidnight)
+                    listOf(Color(0xFF060D1F), AstroBackground, AstroSurface)
                 )
             )
     ) {
@@ -66,7 +66,7 @@ fun MoonScreen(
                         .fillMaxWidth()
                         .background(
                             Brush.verticalGradient(
-                                listOf(Color(0xFF060D1F), CosmicDeepPurple)
+                                listOf(Color(0xFF060D1F), AstroBackground)
                             )
                         )
                         .padding(20.dp)
@@ -81,7 +81,7 @@ fun MoonScreen(
                         Text(
                             text = "$currentMonth $currentYear",
                             style = MaterialTheme.typography.bodyMedium,
-                            color = CometGray
+                            color = AstroTextSecondary
                         )
                     }
                 }
@@ -99,7 +99,7 @@ fun MoonScreen(
                                 listOf(
                                     AquaGlow.copy(0.15f),
                                     Color(0xFF0A1628),
-                                    CosmicDeepPurple
+                                    AstroBackground
                                 )
                             )
                         )
@@ -128,7 +128,7 @@ fun MoonScreen(
                         Text(
                             text = "${todayPhase.zodiacSign} Burcunda",
                             style = MaterialTheme.typography.bodyMedium,
-                            color = CometGray
+                            color = AstroTextSecondary
                         )
                         Spacer(Modifier.height(16.dp))
 
@@ -140,7 +140,7 @@ fun MoonScreen(
                             Text(
                                 text = "Aydınlanma: ${(todayPhase.illumination * 100).toInt()}%",
                                 style = MaterialTheme.typography.labelMedium,
-                                color = MoonSilver
+                                color = AstroText
                             )
                             Spacer(Modifier.height(6.dp))
                             LinearProgressIndicator(
@@ -150,7 +150,7 @@ fun MoonScreen(
                                     .height(8.dp)
                                     .clip(RoundedCornerShape(4.dp)),
                                 color = AquaGlow,
-                                trackColor = CosmicCardLight
+                                trackColor = AstroCardLight
                             )
                         }
 
@@ -168,7 +168,7 @@ fun MoonScreen(
                         Text(
                             text = todayPhase.ritual,
                             style = MaterialTheme.typography.bodySmall,
-                            color = MoonSilver,
+                            color = AstroText,
                             textAlign = TextAlign.Center,
                             fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
                         )
@@ -205,11 +205,11 @@ fun MoonScreen(
                         Triple("🌕 Dolunay", "Dolunay Şükranı", "Ayın ışığı altında 3 şükran yaz. Bir şeyi bırakmak istiyorsan kağıda yaz ve yak. Tuz banyosu veya ay suyu hazırlama için idealdir."),
                         Triple("🌗 Son Dördün", "Bırakma Ritüeli", "Hayatından çıkarmak istediğin şeyleri yaz. Bunları bırakmayı dileyen bir meditasyon yap. Evi temizle, yenilenme için yer aç.")
                     ).forEach { (emoji, title, desc) ->
-                        CosmicCard(
+                        AstroCard(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 6.dp),
-                            gradientColors = listOf(CosmicCard, Color(0xFF0A1628))
+                            gradientColors = listOf(AstroCard, Color(0xFF0A1628))
                         ) {
                             Text(
                                 text = emoji,
@@ -220,14 +220,14 @@ fun MoonScreen(
                             Text(
                                 text = title,
                                 style = MaterialTheme.typography.titleSmall,
-                                color = StarWhite,
+                                color = AstroDark,
                                 fontWeight = FontWeight.SemiBold
                             )
                             Spacer(Modifier.height(6.dp))
                             Text(
                                 text = desc,
                                 style = MaterialTheme.typography.bodySmall,
-                                color = CometGray
+                                color = AstroTextSecondary
                             )
                         }
                     }
@@ -249,13 +249,13 @@ private fun MoonPhaseListItem(
             .clip(RoundedCornerShape(14.dp))
             .background(
                 if (isToday)
-                    Brush.horizontalGradient(listOf(AquaGlow.copy(0.2f), CosmicCard))
+                    Brush.horizontalGradient(listOf(AquaGlow.copy(0.2f), AstroCard))
                 else
-                    Brush.horizontalGradient(listOf(CosmicCard, CosmicMidnight))
+                    Brush.horizontalGradient(listOf(AstroCard, AstroSurface))
             )
             .border(
                 1.dp,
-                if (isToday) AquaGlow.copy(0.5f) else CosmicCardLight,
+                if (isToday) AquaGlow.copy(0.5f) else AstroCardLight,
                 RoundedCornerShape(14.dp)
             )
             .padding(16.dp),
@@ -267,7 +267,7 @@ private fun MoonPhaseListItem(
             modifier = Modifier
                 .size(48.dp)
                 .clip(CircleShape)
-                .background(CosmicDeepPurple),
+                .background(AstroBackground),
             contentAlignment = Alignment.Center
         ) {
             Text(text = phase.phaseEmoji, fontSize = 28.sp)
@@ -281,7 +281,7 @@ private fun MoonPhaseListItem(
                 Text(
                     text = phase.phaseName,
                     style = MaterialTheme.typography.titleSmall,
-                    color = if (isToday) AquaGlow else StarWhite,
+                    color = if (isToday) AquaGlow else AstroDark,
                     fontWeight = FontWeight.Bold
                 )
                 if (isToday) {
@@ -304,7 +304,7 @@ private fun MoonPhaseListItem(
             Text(
                 text = phase.date,
                 style = MaterialTheme.typography.bodySmall,
-                color = CometGray
+                color = AstroTextSecondary
             )
             Text(
                 text = phase.zodiacSign + " ✦ " + phase.energy,
@@ -324,7 +324,7 @@ private fun MoonPhaseListItem(
             Text(
                 text = "Işık",
                 style = MaterialTheme.typography.labelSmall,
-                color = CometGray
+                color = AstroTextSecondary
             )
         }
     }
@@ -359,3 +359,4 @@ private fun generateMonthlyPhases(month: String, year: Int): List<MoonPhase> {
         MoonPhase("29 $month $year", "Yeniay", "🌑", 0.02f, "Kova", "Yeni bir döngü başlıyor.", "Taze başlangıçlar")
     )
 }
+

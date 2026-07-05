@@ -1,4 +1,4 @@
-package com.example.astroyorum.ui.birthchart
+﻿package com.example.astroyorum.ui.birthchart
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -42,7 +42,7 @@ fun BirthChartScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(CosmicDeepPurple),
+            .background(AstroBackground),
         contentPadding = PaddingValues(bottom = 80.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -50,20 +50,20 @@ fun BirthChartScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Brush.verticalGradient(listOf(CosmicMidnight, CosmicDeepPurple)))
+                    .background(Brush.verticalGradient(listOf(AstroSurface, AstroBackground)))
                     .padding(20.dp)
             ) {
                 Column {
                     Text(
                         text = "🔯 Doğum Haritası",
                         style = MaterialTheme.typography.headlineMedium,
-                        color = StellarLavender,
+                        color = AstroLavender,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = "${userProfile.name} · ${userProfile.birthDay}/${userProfile.birthMonth}/${userProfile.birthYear}",
                         style = MaterialTheme.typography.bodySmall,
-                        color = CometGray
+                        color = AstroTextSecondary
                     )
                 }
             }
@@ -94,9 +94,9 @@ fun BirthChartScreen(
                     Triple("🌙", "Ay", chartData.moonSign),
                     Triple("⬆️", "Yükselen", chartData.risingSign)
                 ).forEach { (emoji, label, signName) ->
-                    CosmicCard(
+                    AstroCard(
                         modifier = Modifier.weight(1f),
-                        gradientColors = listOf(NebulaPurple.copy(0.2f), CosmicCard)
+                        gradientColors = listOf(NebulaPurple.copy(0.2f), AstroCard)
                     ) {
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
@@ -106,7 +106,7 @@ fun BirthChartScreen(
                             Text(
                                 text = label,
                                 style = MaterialTheme.typography.labelSmall,
-                                color = CometGray
+                                color = AstroTextSecondary
                             )
                             Text(
                                 text = ZodiacDatabase.signs.find { it.name == signName }?.emoji ?: "⭐",
@@ -127,7 +127,7 @@ fun BirthChartScreen(
 
         // ─── Gezegen Konumları ───────────────────────────────────────────
         item {
-            CosmicCard(
+            AstroCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
@@ -166,7 +166,7 @@ fun BirthChartScreen(
                         Text(
                             text = name,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = CometGray,
+                            color = AstroTextSecondary,
                             modifier = Modifier.weight(1f)
                         )
                         Row(
@@ -183,7 +183,7 @@ fun BirthChartScreen(
                         }
                     }
                     if (symbol != "♇") {
-                        HorizontalDivider(color = CosmicCardLight.copy(0.4f))
+                        HorizontalDivider(color = AstroCardLight.copy(0.4f))
                     }
                 }
             }
@@ -196,13 +196,13 @@ fun BirthChartScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
                     .clip(RoundedCornerShape(12.dp))
-                    .background(CosmicCard)
+                    .background(AstroCard)
                     .padding(16.dp)
             ) {
                 Text(
                     text = "ℹ️ Bu harita basitleştirilmiş bir hesaplamadır. Kesin sonuçlar için doğum saati ve şehir bilgisi gereklidir. Eğlence amaçlıdır.",
                     style = MaterialTheme.typography.labelSmall,
-                    color = CometGray,
+                    color = AstroTextSecondary,
                     textAlign = TextAlign.Center
                 )
             }
@@ -221,7 +221,7 @@ private fun NatalChartCanvas(chartData: BirthChartData) {
             .clip(CircleShape)
             .background(
                 Brush.radialGradient(
-                    listOf(NebulaPurple.copy(0.2f), CosmicDeepPurple, Color(0xFF0A0515))
+                    listOf(NebulaPurple.copy(0.2f), AstroBackground, Color(0xFF0A0515))
                 )
             )
             .border(2.dp, GoldenStardust.copy(0.4f), CircleShape),
@@ -299,32 +299,47 @@ private fun DrawScope.drawNatalChart(signs: List<String>) {
 
 // Basitleştirilmiş doğum haritası hesaplama
 fun calculateSimpleChart(profile: UserProfile): BirthChartData {
-    val signs = listOf("Koç", "Boğa", "İkizler", "Yengeç", "Aslan", "Başak",
-        "Terazi", "Akrep", "Yay", "Oğlak", "Kova", "Balık")
+    return try {
+        val signs = listOf("Koç", "Boğa", "İkizler", "Yengeç", "Aslan", "Başak",
+            "Terazi", "Akrep", "Yay", "Oğlak", "Kova", "Balık")
 
-    val sunId = calculateZodiacId(profile.birthDay, profile.birthMonth)
-    val moonId = (sunId + profile.birthHour / 2) % 12
-    val risingId = (sunId + profile.birthHour / 2 + 3) % 12
-    val mercuryId = (sunId + 1) % 12
-    val venusId = (sunId + 2) % 12
-    val marsId = (sunId + profile.birthYear % 2 + 4) % 12
-    val jupiterId = (sunId + profile.birthYear % 12) % 12
-    val saturnId = (sunId + profile.birthYear % 8 + 3) % 12
-    val uranusId = (sunId + 7) % 12
-    val neptuneId = (sunId + 10) % 12
-    val plutoId = (sunId + 5) % 12
+        val safeDay = profile.birthDay.coerceIn(1, 31)
+        val safeMonth = profile.birthMonth.coerceIn(1, 12)
+        val sunId = calculateZodiacId(safeDay, safeMonth).coerceIn(0, 11)
+        val birthHour = profile.birthHour.coerceAtLeast(0)
+        val birthYear = profile.birthYear.coerceAtLeast(0)
 
-    return BirthChartData(
-        sunSign = signs[sunId],
-        moonSign = signs[moonId],
-        risingSign = signs[risingId],
-        mercury = signs[mercuryId],
-        venus = signs[venusId],
-        mars = signs[marsId],
-        jupiter = signs[jupiterId],
-        saturn = signs[saturnId],
-        uranus = signs[uranusId],
-        neptune = signs[neptuneId],
-        pluto = signs[plutoId]
-    )
+        val moonId = (sunId + birthHour / 2) % 12
+        val risingId = (sunId + birthHour / 2 + 3) % 12
+        val mercuryId = (sunId + 1) % 12
+        val venusId = (sunId + 2) % 12
+        val marsId = (sunId + birthYear % 2 + 4) % 12
+        val jupiterId = (sunId + birthYear % 12) % 12
+        val saturnId = (sunId + birthYear % 8 + 3) % 12
+        val uranusId = (sunId + 7) % 12
+        val neptuneId = (sunId + 10) % 12
+        val plutoId = (sunId + 5) % 12
+
+        BirthChartData(
+            sunSign = signs[sunId],
+            moonSign = signs[moonId],
+            risingSign = signs[risingId],
+            mercury = signs[mercuryId],
+            venus = signs[venusId],
+            mars = signs[marsId],
+            jupiter = signs[jupiterId],
+            saturn = signs[saturnId],
+            uranus = signs[uranusId],
+            neptune = signs[neptuneId],
+            pluto = signs[plutoId]
+        )
+    } catch (e: Exception) {
+        // Hata durumunda varsayılan harita döndür
+        BirthChartData(
+            sunSign = "Koç", moonSign = "Koç", risingSign = "Koç",
+            mercury = "Koç", venus = "Koç", mars = "Koç", jupiter = "Koç",
+            saturn = "Koç", uranus = "Koç", neptune = "Koç", pluto = "Koç"
+        )
+    }
 }
+

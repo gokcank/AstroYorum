@@ -41,7 +41,7 @@ fun HomeScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(CosmicDeepPurple)
+            .background(AstroBackground)
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -60,7 +60,7 @@ fun HomeScreen(
                         .fillMaxWidth()
                         .background(
                             Brush.verticalGradient(
-                                listOf(CosmicMidnight, CosmicDeepPurple)
+                                listOf(AstroSurface, AstroBackground)
                             )
                         )
                         .padding(horizontal = 20.dp, vertical = 24.dp)
@@ -71,13 +71,13 @@ fun HomeScreen(
                                 "${today.get(java.util.Calendar.DAY_OF_MONTH)} " +
                                 "${monthNames[today.get(java.util.Calendar.MONTH)]}",
                             style = MaterialTheme.typography.labelMedium,
-                            color = CometGray
+                            color = AstroTextSecondary
                         )
                         Spacer(Modifier.height(4.dp))
                         Text(
                             text = "Merhaba, ${userProfile.name.ifEmpty { "Yolcu" }} ✨",
                             style = MaterialTheme.typography.headlineMedium,
-                            color = StarWhite,
+                            color = AstroDark,
                             fontWeight = FontWeight.Bold
                         )
                     }
@@ -86,14 +86,14 @@ fun HomeScreen(
 
             // ─── Günlük Burç Yorumu ─────────────────────────────────────────
             item {
-                CosmicCard(
+                AstroCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
                     gradientColors = listOf(
                         GoldenDim.copy(alpha = 0.3f),
                         NebulaPurple.copy(alpha = 0.3f),
-                        CosmicCard
+                        AstroCard
                     )
                 ) {
                     Row(
@@ -110,13 +110,13 @@ fun HomeScreen(
                             Text(
                                 text = sign.name,
                                 style = MaterialTheme.typography.headlineSmall,
-                                color = StarWhite,
+                                color = AstroDark,
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
                                 text = sign.dates,
                                 style = MaterialTheme.typography.labelSmall,
-                                color = CometGray
+                                color = AstroTextSecondary
                             )
                         }
                         Spacer(Modifier.weight(1f))
@@ -125,7 +125,7 @@ fun HomeScreen(
                             Text(
                                 text = sign.element,
                                 style = MaterialTheme.typography.labelSmall,
-                                color = CometGray
+                                color = AstroTextSecondary
                             )
                         }
                     }
@@ -144,8 +144,10 @@ fun HomeScreen(
                     Text(
                         text = dailyText,
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MoonSilver,
-                        lineHeight = 22.sp
+                        color = AstroText,
+                        lineHeight = 22.sp,
+                        maxLines = 4,
+                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                     )
 
                     Spacer(Modifier.height(16.dp))
@@ -172,13 +174,17 @@ fun HomeScreen(
                     Spacer(Modifier.height(12.dp))
 
                     // Şanslı bilgiler
+                    val luckyNumber = if (currentScores.luckyNumber > 0) currentScores.luckyNumber else sign.luckyNumber
+                    val luckyStone = currentScores.luckyStone.ifEmpty { sign.luckyStone }
+                    val luckyColor = currentScores.luckyColor.ifEmpty { sign.luckyColor }
+
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        LuckyChip("🔢 ${sign.luckyNumber}", "Sayı")
-                        LuckyChip("💎 ${sign.luckyStone}", "Taş")
-                        LuckyChip("🎨 ${sign.luckyColor}", "Renk")
+                        LuckyChip("🔢 $luckyNumber", "Sayı")
+                        LuckyChip("💎 $luckyStone", "Taş")
+                        LuckyChip("🎨 $luckyColor", "Renk")
                     }
 
                     Spacer(Modifier.height(12.dp))
@@ -220,7 +226,7 @@ fun HomeScreen(
                         )
                         QuickAccessCard(
                             emoji = "🌙", title = "Ay\nTakvimi",
-                            gradient = listOf(AquaGlow.copy(0.3f), CosmicCard),
+                            gradient = listOf(AquaGlow.copy(0.3f), AstroCard),
                             modifier = Modifier.weight(1f),
                             onClick = onNavigateToMoon
                         )
@@ -236,7 +242,7 @@ fun HomeScreen(
                     todayMoonPhase()
                 }
 
-                CosmicCard(
+                AstroCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
@@ -259,13 +265,13 @@ fun HomeScreen(
                             Text(
                                 text = moonPhase.zodiacSign + " burcunda",
                                 style = MaterialTheme.typography.labelMedium,
-                                color = CometGray
+                                color = AstroTextSecondary
                             )
                             Spacer(Modifier.height(4.dp))
                             Text(
                                 text = moonPhase.energy,
                                 style = MaterialTheme.typography.bodySmall,
-                                color = MoonSilver
+                                color = AstroText
                             )
                         }
                     }
@@ -273,7 +279,7 @@ fun HomeScreen(
                     Text(
                         text = moonPhase.ritual,
                         style = MaterialTheme.typography.bodySmall,
-                        color = CometGray,
+                        color = AstroTextSecondary,
                         fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
                     )
                 }
@@ -281,7 +287,7 @@ fun HomeScreen(
 
             // ─── Günün Tarot Kartı ────────────────────────────────────────────
             item {
-                CosmicCard(
+                AstroCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
@@ -300,7 +306,7 @@ fun HomeScreen(
                                 .clip(RoundedCornerShape(8.dp))
                                 .background(
                                     Brush.verticalGradient(
-                                        listOf(NebulaPurple.copy(0.5f), CosmicCard)
+                                        listOf(NebulaPurple.copy(0.5f), AstroCard)
                                     )
                                 ),
                             contentAlignment = Alignment.Center
@@ -311,18 +317,18 @@ fun HomeScreen(
                             Text(
                                 text = "Günün Kartı",
                                 style = MaterialTheme.typography.labelMedium,
-                                color = StellarLavender
+                                color = AstroLavender
                             )
                             Text(
                                 text = dailyCard.name,
                                 style = MaterialTheme.typography.titleLarge,
-                                color = StarWhite,
+                                color = AstroDark,
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
                                 text = dailyCard.arcana + " Arkana",
                                 style = MaterialTheme.typography.labelSmall,
-                                color = CometGray
+                                color = AstroTextSecondary
                             )
                         }
                     }
@@ -330,14 +336,14 @@ fun HomeScreen(
                     Text(
                         text = dailyCard.meaningUpright,
                         style = MaterialTheme.typography.bodySmall,
-                        color = MoonSilver
+                        color = AstroText
                     )
                     Spacer(Modifier.height(12.dp))
                     OutlinedButton(
                         onClick = onNavigateToTarot,
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.outlinedButtonColors(
-                            contentColor = StellarLavender
+                            contentColor = AstroLavender
                         ),
                         border = androidx.compose.foundation.BorderStroke(1.dp, NebulaPurple),
                         shape = RoundedCornerShape(10.dp)
@@ -356,7 +362,7 @@ private fun LuckyChip(value: String, label: String) {
         Box(
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
-                .background(CosmicDeepPurple.copy(0.5f))
+                .background(AstroBackground.copy(0.5f))
                 .padding(horizontal = 10.dp, vertical = 6.dp)
         ) {
             Text(
@@ -368,7 +374,7 @@ private fun LuckyChip(value: String, label: String) {
         Text(
             text = label,
             style = MaterialTheme.typography.labelSmall,
-            color = CometGray,
+            color = AstroTextSecondary,
             fontSize = 10.sp
         )
     }
@@ -399,10 +405,11 @@ private fun QuickAccessCard(
             Text(
                 text = title,
                 style = MaterialTheme.typography.labelSmall,
-                color = MoonSilver,
+                color = AstroText,
                 textAlign = TextAlign.Center,
                 lineHeight = 14.sp
             )
         }
     }
 }
+

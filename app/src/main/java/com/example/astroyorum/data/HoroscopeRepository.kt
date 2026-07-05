@@ -1,86 +1,110 @@
 package com.example.astroyorum.data
 
 import android.util.Log
-import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.tasks.await
+import com.example.astroyorum.BuildConfig
+import io.github.jan.supabase.createSupabaseClient
+import io.github.jan.supabase.postgrest.Postgrest
+import io.github.jan.supabase.postgrest.from
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.double
+import kotlinx.serialization.json.int
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.long
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+@Serializable
+data class SupabaseHoroscopeRow(
+    val date: String,
+    val horoscopes: JsonObject,
+    val scores: JsonObject,
+    val moon_phase: JsonObject? = null
+)
+
 class HoroscopeRepository {
-    private val firestore = FirebaseFirestore.getInstance()
+    private val supabase = createSupabaseClient(
+        supabaseUrl = BuildConfig.SUPABASE_URL,
+        supabaseKey = BuildConfig.SUPABASE_ANON_KEY
+    ) {
+        install(Postgrest)
+    }
 
     suspend fun getDailyAstroData(): DailyAstroData? {
         return try {
             val dateStr = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-            
-            val docSnapshot = firestore.collection("daily_horoscopes")
-                .document(dateStr)
-                .get()
-                .await()
 
-            if (docSnapshot.exists()) {
-                val horoscopes = docSnapshot.get("horoscopes") as? Map<String, String> ?: emptyMap()
-                val scoresRaw = docSnapshot.get("scores") as? Map<String, Map<String, Long>> ?: emptyMap()
-                val moonPhaseMap = docSnapshot.get("moon_phase") as? Map<String, Any>
+            val row = supabase.from("daily_horoscopes")
+                .select {
+                    filter { eq("date", dateStr) }
+                }
+                .decodeSingleOrNull<SupabaseHoroscopeRow>()
 
-                val scores = scoresRaw.mapValues { (_, value) ->
+            if (row != null) {
+                // horoscopes: JsonObject -> Map<String, String>
+                val horoscopes = row.horoscopes.mapValues { (_, v) ->
+                    v.jsonPrimitive.content
+                }
+
+                // scores: JsonObject -> Map<String, ZodiacScores>
+                val scores = row.scores.mapValues { (_, v) ->
+                    val obj = v.jsonObject
                     ZodiacScores(
-                        love = (value["love"] ?: 50L).toInt(),
-                        career = (value["career"] ?: 50L).toInt(),
-                        health = (value["health"] ?: 50L).toInt()
+                        love = obj["love"]?.jsonPrimitive?.int ?: 50,
+                        career = obj["career"]?.jsonPrimitive?.int ?: 50,
+                        health = obj["health"]?.jsonPrimitive?.int ?: 50,
+                        luckyNumber = obj["luckyNumber"]?.jsonPrimitive?.int ?: 0,
+                        luckyStone = obj["luckyStone"]?.jsonPrimitive?.content ?: "",
+                        luckyColor = obj["luckyColor"]?.jsonPrimitive?.content ?: ""
                     )
                 }
 
-                val moonPhase = moonPhaseMap?.let {
+                // moon_phase (opsiyonel)
+                val moonPhase = row.moon_phase?.let {
                     MoonPhase(
-                        date = it["date"] as? String ?: dateStr,
-                        phaseName = it["phaseName"] as? String ?: "",
-                        phaseEmoji = it["phaseEmoji"] as? String ?: "",
-                        illumination = (it["illumination"] as? Double)?.toFloat() ?: 0f,
-                        zodiacSign = it["zodiacSign"] as? String ?: "",
-                        ritual = it["ritual"] as? String ?: "",
-                        energy = it["energy"] as? String ?: ""
+                        date = it["date"]?.jsonPrimitive?.content ?: dateStr,
+                        phaseName = it["phaseName"]?.jsonPrimitive?.content ?: "",
+                        phaseEmoji = it["phaseEmoji"]?.jsonPrimitive?.content ?: "",
+                        illumination = it["illumination"]?.jsonPrimitive?.double?.toFloat() ?: 0f,
+                        zodiacSign = it["zodiacSign"]?.jsonPrimitive?.content ?: "",
+                        ritual = it["ritual"]?.jsonPrimitive?.content ?: "",
+                        energy = it["energy"]?.jsonPrimitive?.content ?: ""
                     )
-                }
+                } ?: todayMoonPhase()
 
                 DailyAstroData(horoscopes, scores, moonPhase)
             } else {
-                // Veritabanı boşsa sahte verilerle doldur
+                // Veritabanında bugün için kayıt yoksa fallback verileri döndür
+                Log.w("HoroscopeRepository", "Bugün için Supabase'de veri bulunamadı: $dateStr")
                 val mockHoroscopes = mapOf(
-                    "Aries" to "Bugün Koç burçları için harika bir gün! Enerjiniz yüksek.",
-                    "Taurus" to "Sevgili Boğa, finansal konularda sürpriz gelişmeler yaşayabilirsiniz.",
-                    "Gemini" to "İkizler, iletişim becerileriniz bugün tavan yapıyor.",
-                    "Cancer" to "Duygusal yengeçler, ailenizle vakit geçirmek iyi gelecek.",
-                    "Leo" to "Aslanlar sahneye çıkmaya hazır olun! Liderliğiniz parlıyor.",
-                    "Virgo" to "Başak burçları, detaylara olan takıntınız kriz çözecek.",
-                    "Libra" to "Teraziler, uyum arayışınız sonuç veriyor.",
-                    "Scorpio" to "Gizemli Akrepler, sezgileriniz inanılmaz kuvvetli.",
-                    "Sagittarius" to "Özgür ruhlu Yaylar, yeni maceralara atılmak için harika bir gün.",
-                    "Capricorn" to "Oğlaklar, disiplinli çalışmanızın karşılığını alıyorsunuz.",
-                    "Aquarius" to "Yenilikçi Kovalar, farklı fikirleriniz ilham verecek.",
-                    "Pisces" to "Duyarlı Balıklar, bugün hayal gücünüz sınır tanımıyor."
+                    "Aries" to "Bugün Koç burçları için enerjik ve hareketli bir gün.",
+                    "Taurus" to "Sevgili Boğa, planlarınızı sağlamlaştırmak için mükemmel bir gün.",
+                    "Gemini" to "İkizler, iletişim becerileriniz harika.",
+                    "Cancer" to "Duygusal yengeçler, iç sesinize kulak verin.",
+                    "Leo" to "Aslanlar sahneye çıkmaya hazır olun!",
+                    "Virgo" to "Başak burçları, düzen arayışınız sonuç veriyor.",
+                    "Libra" to "Teraziler, uyum ve denge bugün sizinle.",
+                    "Scorpio" to "Gizemli Akrepler, odaklanma gücünüz çok yüksek.",
+                    "Sagittarius" to "Özgür ruhlu Yaylar, yeni maceralar kapıda.",
+                    "Capricorn" to "Oğlaklar, disiplinli çalışmanızın karşılığını alma zamanı geldi.",
+                    "Aquarius" to "Yenilikçi Kovalar, farklı fikirlerinizle bugün herkesi şaşırtacaksınız.",
+                    "Pisces" to "Duyarlı Balıklar, hayal gücünüz sınır tanımıyor."
                 )
-
-                val mockScores = mockHoroscopes.keys.associateWith { ZodiacScores(80, 85, 75) }
-                val mockMoon = todayMoonPhase() // Eskisi gibi fallback
-
-                val dbData = mapOf(
-                    "horoscopes" to mockHoroscopes,
-                    "scores" to mockScores,
-                    "moon_phase" to mockMoon
-                )
-                
-                // Firestore'a kaydet
-                firestore.collection("daily_horoscopes")
-                    .document(dateStr)
-                    .set(dbData)
-                    .await()
-                    
-                DailyAstroData(mockHoroscopes, mockScores, mockMoon)
+                val colors = listOf("Kırmızı", "Mavi", "Yeşil", "Sarı", "Mor", "Turuncu", "Beyaz")
+                val stones = listOf("Ametist", "Kuvars", "Yakut", "Zümrüt", "Safir", "Turkuaz")
+                val mockScores = mockHoroscopes.keys.associateWith {
+                    ZodiacScores(
+                        love = (50..100).random(), career = (50..100).random(),
+                        health = (50..100).random(), luckyNumber = (1..99).random(),
+                        luckyStone = stones.random(), luckyColor = colors.random()
+                    )
+                }
+                DailyAstroData(mockHoroscopes, mockScores, todayMoonPhase())
             }
         } catch (e: Exception) {
-            Log.e("HoroscopeRepository", "Error fetching astro data", e)
+            Log.e("HoroscopeRepository", "Supabase veri çekme hatası", e)
             null
         }
     }

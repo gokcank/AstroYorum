@@ -1,4 +1,4 @@
-package com.example.astroyorum
+﻿package com.example.astroyorum
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -118,14 +118,14 @@ private fun AstroMainApp(
                 .fillMaxWidth()
                 .background(
                     Brush.verticalGradient(
-                        listOf(CosmicDeepPurple.copy(0f), CosmicMidnight)
+                        listOf(AstroBackground.copy(0f), AstroSurface)
                     )
                 )
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(CosmicMidnight)
+                    .background(AstroSurface)
                     .border(
                         topStart = 0.dp, topEnd = 0.dp,
                         bottomStart = 0.dp, bottomEnd = 0.dp
@@ -160,7 +160,7 @@ private fun AstroMainApp(
                         Text(
                             text = label,
                             fontSize = 10.sp,
-                            color = if (isSelected) GoldenStardust else CometGray,
+                            color = if (isSelected) GoldenStardust else AstroTextSecondary,
                             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                             textAlign = TextAlign.Center
                         )
@@ -181,6 +181,33 @@ private fun AstroMainApp(
             }
         )
     }
+
+    val context = LocalContext.current
+    var showExitDialog by remember { mutableStateOf(false) }
+    val activity = context as? android.app.Activity
+
+    androidx.activity.compose.BackHandler(enabled = backStack.size == 1) {
+        showExitDialog = true
+    }
+
+    if (showExitDialog) {
+        AlertDialog(
+            onDismissRequest = { showExitDialog = false },
+            title = { Text("Çıkış", color = GoldenStardust) },
+            text = { Text("Uygulamadan çıkmak istediğinize emin misiniz?", color = AstroDark) },
+            containerColor = AstroSurface,
+            confirmButton = {
+                TextButton(onClick = { activity?.finish() }) {
+                    Text("Evet", color = RoseQuartz)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showExitDialog = false }) {
+                    Text("Hayır", color = AquaGlow)
+                }
+            }
+        )
+    }
 }
 
 // Border extension for selective sides
@@ -190,3 +217,4 @@ private fun Modifier.border(
     bottomStart: androidx.compose.ui.unit.Dp,
     bottomEnd: androidx.compose.ui.unit.Dp
 ) = this
+

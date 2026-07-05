@@ -1,7 +1,8 @@
-package com.example.astroyorum.ui.profile
+﻿package com.example.astroyorum.ui.profile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -38,7 +39,7 @@ fun ProfileScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(CosmicDeepPurple),
+            .background(AstroBackground),
         contentPadding = PaddingValues(bottom = 80.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -48,14 +49,14 @@ fun ProfileScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(
-                        Brush.verticalGradient(listOf(CosmicMidnight, CosmicDeepPurple))
+                        Brush.verticalGradient(listOf(AstroSurface, AstroBackground))
                     )
                     .padding(20.dp)
             ) {
                 Text(
                     text = "👤 Profilim",
                     style = MaterialTheme.typography.headlineMedium,
-                    color = MoonSilver,
+                    color = AstroText,
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -73,7 +74,7 @@ fun ProfileScreen(
                             listOf(
                                 GoldenDim.copy(0.3f),
                                 NebulaPurple.copy(0.2f),
-                                CosmicCard
+                                AstroCard
                             )
                         )
                     )
@@ -91,7 +92,7 @@ fun ProfileScreen(
                             .clip(CircleShape)
                             .background(
                                 Brush.radialGradient(
-                                    listOf(GoldenDim.copy(0.5f), CosmicCard)
+                                    listOf(GoldenDim.copy(0.5f), AstroCard)
                                 )
                             )
                             .border(2.dp, GoldenStardust.copy(0.6f), CircleShape),
@@ -112,13 +113,13 @@ fun ProfileScreen(
                     Text(
                         text = "${sign.name} ${sign.symbol}",
                         style = MaterialTheme.typography.titleMedium,
-                        color = MoonSilver
+                        color = AstroText
                     )
 
                     Text(
                         text = sign.dates,
                         style = MaterialTheme.typography.bodySmall,
-                        color = CometGray
+                        color = AstroTextSecondary
                     )
 
                     Spacer(Modifier.height(16.dp))
@@ -143,6 +144,13 @@ fun ProfileScreen(
                         if (userProfile.birthCity.isNotEmpty()) {
                             ProfileInfoItem("🌍", "Şehir", userProfile.birthCity)
                         }
+                        if (userProfile.gender != "Belirtmek İstemiyorum") {
+                            ProfileInfoItem(
+                                if (userProfile.gender == "Kadın") "👩" else "👨", 
+                                "Cinsiyet", 
+                                userProfile.gender
+                            )
+                        }
                     }
 
                     Spacer(Modifier.height(20.dp))
@@ -164,7 +172,7 @@ fun ProfileScreen(
 
         // ─── Element & Gezegen Bilgileri ─────────────────────────────────
         item {
-            CosmicCard(
+            AstroCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
@@ -190,7 +198,7 @@ fun ProfileScreen(
                         Text(
                             text = label,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = CometGray,
+                            color = AstroTextSecondary,
                             modifier = Modifier.weight(1f)
                         )
                         Text(
@@ -200,14 +208,14 @@ fun ProfileScreen(
                             fontWeight = FontWeight.Bold
                         )
                     }
-                    HorizontalDivider(color = CosmicCardLight.copy(0.5f))
+                    HorizontalDivider(color = AstroCardLight.copy(0.5f))
                 }
             }
         }
 
         // ─── Uygulama Hakkında ───────────────────────────────────────────
         item {
-            CosmicCard(
+            AstroCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
@@ -216,7 +224,7 @@ fun ProfileScreen(
                 Spacer(Modifier.height(12.dp))
 
                 listOf(
-                    "🌟 AstroYorum v1.0.1 (Internal Testing)",
+                    "🌟 AstroYorum v1.0.2 (Closed Beta)",
                     "👨‍💻 Geliştirici: gokcank",
                     "🔮 Günlük burç yorumları",
                     "🃏 Tarot fal modülü",
@@ -225,7 +233,7 @@ fun ProfileScreen(
                     Text(
                         text = item,
                         style = MaterialTheme.typography.bodySmall,
-                        color = CometGray,
+                        color = AstroTextSecondary,
                         modifier = Modifier.padding(vertical = 4.dp)
                     )
                 }
@@ -257,7 +265,7 @@ fun ProfileScreen(
                 Text(
                     text = "Yasal Uyarı ve Sorumluluk Reddi: Bu uygulama yalnızca eğlence ve kişisel gelişim amaçlıdır. Astroloji ve tarot okumaları kesin yargılar içermez, tıbbi, hukuki veya finansal tavsiye yerine geçemez.",
                     style = MaterialTheme.typography.labelSmall,
-                    color = CometGray.copy(0.6f),
+                    color = AstroTextSecondary.copy(0.6f),
                     textAlign = TextAlign.Center
                 )
             }
@@ -286,14 +294,14 @@ private fun ProfileInfoItem(emoji: String, label: String, value: String) {
         Text(
             text = value,
             style = MaterialTheme.typography.titleSmall,
-            color = StarWhite,
+            color = AstroDark,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
         Text(
             text = label,
             style = MaterialTheme.typography.labelSmall,
-            color = CometGray
+            color = AstroTextSecondary
         )
     }
 }
@@ -311,10 +319,11 @@ private fun EditProfileDialog(
     var hour by remember { mutableStateOf(currentProfile.birthHour.toString()) }
     var minute by remember { mutableStateOf(currentProfile.birthMinute.toString()) }
     var city by remember { mutableStateOf(currentProfile.birthCity) }
+    var gender by remember { mutableStateOf(currentProfile.gender) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        containerColor = CosmicMidnight,
+        containerColor = AstroSurface,
         title = {
             Text("Profili Düzenle", color = GoldenStardust, fontWeight = FontWeight.Bold)
         },
@@ -328,10 +337,10 @@ private fun EditProfileDialog(
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = GoldenStardust,
-                        unfocusedBorderColor = CosmicCardLight,
+                        unfocusedBorderColor = AstroCardLight,
                         focusedLabelColor = GoldenStardust,
-                        focusedTextColor = StarWhite,
-                        unfocusedTextColor = MoonSilver
+                        focusedTextColor = AstroDark,
+                        unfocusedTextColor = AstroText
                     ),
                     shape = RoundedCornerShape(10.dp)
                 )
@@ -344,8 +353,8 @@ private fun EditProfileDialog(
                         singleLine = true,
                         modifier = Modifier.weight(1f),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = GoldenStardust, unfocusedBorderColor = CosmicCardLight,
-                            focusedTextColor = StarWhite, unfocusedTextColor = MoonSilver
+                            focusedBorderColor = GoldenStardust, unfocusedBorderColor = AstroCardLight,
+                            focusedTextColor = AstroDark, unfocusedTextColor = AstroText
                         )
                     )
                     OutlinedTextField(
@@ -355,8 +364,8 @@ private fun EditProfileDialog(
                         singleLine = true,
                         modifier = Modifier.weight(1f),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = GoldenStardust, unfocusedBorderColor = CosmicCardLight,
-                            focusedTextColor = StarWhite, unfocusedTextColor = MoonSilver
+                            focusedBorderColor = GoldenStardust, unfocusedBorderColor = AstroCardLight,
+                            focusedTextColor = AstroDark, unfocusedTextColor = AstroText
                         )
                     )
                     OutlinedTextField(
@@ -366,8 +375,8 @@ private fun EditProfileDialog(
                         singleLine = true,
                         modifier = Modifier.weight(1.2f),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = GoldenStardust, unfocusedBorderColor = CosmicCardLight,
-                            focusedTextColor = StarWhite, unfocusedTextColor = MoonSilver
+                            focusedBorderColor = GoldenStardust, unfocusedBorderColor = AstroCardLight,
+                            focusedTextColor = AstroDark, unfocusedTextColor = AstroText
                         )
                     )
                 }
@@ -380,8 +389,8 @@ private fun EditProfileDialog(
                         singleLine = true,
                         modifier = Modifier.weight(1f),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = GoldenStardust, unfocusedBorderColor = CosmicCardLight,
-                            focusedTextColor = StarWhite, unfocusedTextColor = MoonSilver
+                            focusedBorderColor = GoldenStardust, unfocusedBorderColor = AstroCardLight,
+                            focusedTextColor = AstroDark, unfocusedTextColor = AstroText
                         )
                     )
                     OutlinedTextField(
@@ -391,8 +400,8 @@ private fun EditProfileDialog(
                         singleLine = true,
                         modifier = Modifier.weight(1f),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = GoldenStardust, unfocusedBorderColor = CosmicCardLight,
-                            focusedTextColor = StarWhite, unfocusedTextColor = MoonSilver
+                            focusedBorderColor = GoldenStardust, unfocusedBorderColor = AstroCardLight,
+                            focusedTextColor = AstroDark, unfocusedTextColor = AstroText
                         )
                     )
                 }
@@ -405,13 +414,45 @@ private fun EditProfileDialog(
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = GoldenStardust,
-                        unfocusedBorderColor = CosmicCardLight,
+                        unfocusedBorderColor = AstroCardLight,
                         focusedLabelColor = GoldenStardust,
-                        focusedTextColor = StarWhite,
-                        unfocusedTextColor = MoonSilver
+                        focusedTextColor = AstroDark,
+                        unfocusedTextColor = AstroText
                     ),
                     shape = RoundedCornerShape(10.dp)
                 )
+
+                Spacer(modifier = Modifier.height(4.dp))
+                Text("Cinsiyet", color = GoldenStardust, style = MaterialTheme.typography.labelMedium)
+                val genders = listOf("Kadın", "Erkek", "Belirtmek İstemiyorum")
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    genders.forEach { g ->
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(AstroCard)
+                                .border(
+                                    1.dp,
+                                    if (gender == g) GoldenStardust else AstroCardLight,
+                                    RoundedCornerShape(8.dp)
+                                )
+                                .clickable { gender = g }
+                                .padding(8.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = g,
+                                style = MaterialTheme.typography.labelSmall,
+                                color = if (gender == g) GoldenStardust else AstroText,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
+                }
             }
         },
         confirmButton = {
@@ -431,20 +472,22 @@ private fun EditProfileDialog(
                         birthHour = h,
                         birthMinute = min,
                         birthCity = city,
+                        gender = gender,
                         zodiacSignId = calculateZodiacId(d, m)
                     ))
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = GoldenStardust,
-                    contentColor = CosmicDeepPurple
+                    contentColor = AstroBackground
                 )
             ) { Text("Kaydet") }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("İptal", color = CometGray)
+                Text("İptal", color = AstroTextSecondary)
             }
         }
     )
 }
+
 
