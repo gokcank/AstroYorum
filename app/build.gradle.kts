@@ -19,11 +19,12 @@ val admobInterstitialId = localProperties.getProperty("ADMOB_INTERSTITIAL_ID") ?
 val admobRewardedId = localProperties.getProperty("ADMOB_REWARDED_ID") ?: ""
 val keystorePasswordStr = localProperties.getProperty("KEYSTORE_PASSWORD") ?: ""
 val keyPasswordStr = localProperties.getProperty("KEY_PASSWORD") ?: ""
+val hasSigningConfig = localPropertiesFile.exists() && keystorePasswordStr.isNotEmpty()
 val supabaseUrl = localProperties.getProperty("SUPABASE_URL") ?: ""
 val supabaseAnonKey = localProperties.getProperty("SUPABASE_ANON_KEY") ?: ""
 
 android {
-    namespace = "com.example.astroyorum"
+    namespace = "com.gokcank.astroyorum"
     compileSdk = 36
     defaultConfig {
         applicationId = "com.gokcank.astroyorum"
@@ -41,11 +42,13 @@ android {
     }
 
     signingConfigs {
-        create("release") {
-            storeFile = file("../astroyorum.jks")
-            storePassword = keystorePasswordStr
-            keyAlias = "astroyorum"
-            keyPassword = keyPasswordStr
+        if (hasSigningConfig) {
+            create("release") {
+                storeFile = file("../astroyorum.jks")
+                storePassword = keystorePasswordStr
+                keyAlias = "astroyorum"
+                keyPassword = keyPasswordStr
+            }
         }
     }
 
@@ -54,7 +57,9 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            signingConfig = signingConfigs.getByName("release")
+            if (hasSigningConfig) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
     compileOptions {
