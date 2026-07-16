@@ -1,4 +1,4 @@
-﻿package com.gokcank.astroyorum
+package com.gokcank.astroyorum
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -21,6 +21,11 @@ class MainActivity : ComponentActivity() {
     setContent {
       val repository = remember { UserPreferencesRepository(this) }
       val themePref by repository.themePreference.collectAsState(initial = 0)
+      val appConfigRepository = remember { com.gokcank.astroyorum.data.AppConfigRepository(this) }
+
+      androidx.compose.runtime.LaunchedEffect(Unit) {
+          appConfigRepository.fetchRemoteConfig()
+      }
 
       AstroYorumTheme(themePref = themePref) { 
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) { 

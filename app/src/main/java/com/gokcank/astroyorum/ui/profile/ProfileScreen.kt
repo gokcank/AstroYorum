@@ -1,4 +1,4 @@
-﻿package com.gokcank.astroyorum.ui.profile
+package com.gokcank.astroyorum.ui.profile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

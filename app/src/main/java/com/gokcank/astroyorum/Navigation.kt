@@ -1,4 +1,4 @@
-﻿package com.gokcank.astroyorum
+package com.gokcank.astroyorum
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -38,7 +38,7 @@ import androidx.compose.material3.MaterialTheme
 fun MainNavigation() {
     val context = LocalContext.current
     val repo = remember { UserPreferencesRepository(context) }
-    val scope = kotlinx.coroutines.MainScope()
+    val scope = rememberCoroutineScope()
 
     val isOnboardingDone by repo.isOnboardingDone.collectAsStateWithLifecycle(false)
     val userProfile by repo.userProfile.collectAsStateWithLifecycle(UserProfile())

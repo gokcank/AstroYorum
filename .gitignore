@@ -20,6 +20,22 @@ local.properties
 .env
 functions/.env
 google-services.json
+app/google-services.json
 scratch_notes.md
 .vscode/
 AI_HANDOFF.md
+AstroYorum Konuşma Geçmişi.md
+
+# Supabase
+supabase/.temp/
+supabase/.env
+
+# Release & Keys
+*.apk
+*.aab
+*.apks
+keystore/
+
+# AI Tools
+.claude/
+.gemini/

@@ -1,4 +1,4 @@
-﻿package com.gokcank.astroyorum.ui.onboarding
+package com.gokcank.astroyorum.ui.onboarding
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
@@ -47,7 +47,7 @@ fun OnboardingScreen(
             .fillMaxSize()
             .background(
                 brush = Brush.verticalGradient(
-                    listOf(MaterialTheme.colorScheme.background, Color(0xFF150D30), MaterialTheme.colorScheme.surface)
+                    listOf(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.colorScheme.surface)
                 )
             )
     ) {
