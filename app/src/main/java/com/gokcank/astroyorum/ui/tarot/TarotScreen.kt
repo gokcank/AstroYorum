@@ -1,4 +1,4 @@
-﻿package com.gokcank.astroyorum.ui.tarot
+package com.gokcank.astroyorum.ui.tarot
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
@@ -96,7 +96,10 @@ fun TarotScreen(modifier: Modifier = Modifier) {
                         SingleCardSection(
                             card = dailyCard,
                             isRevealed = isRevealed,
-                            onReveal = { isRevealed = true }
+                            onReveal = { 
+                                isRevealed = true
+                                com.gokcank.astroyorum.utils.AnalyticsHelper.logFeatureUsage("tarot_single_card")
+                            }
                         )
                     }
                 }
@@ -105,7 +108,10 @@ fun TarotScreen(modifier: Modifier = Modifier) {
                         ThreeCardSection(
                             cards = threeCards,
                             isRevealed = isRevealed,
-                            onReveal = { isRevealed = true }
+                            onReveal = { 
+                                isRevealed = true
+                                com.gokcank.astroyorum.utils.AnalyticsHelper.logFeatureUsage("tarot_three_card")
+                            }
                         )
                     }
                 }
@@ -366,7 +372,7 @@ private fun ThreeCardSection(
     isRevealed: Boolean,
     onReveal: () -> Unit
 ) {
-    val activity = androidx.compose.ui.platform.LocalContext.current as? android.app.Activity
+    val activity = androidx.activity.compose.LocalActivity.current
     var showAdPrompt by remember { mutableStateOf(false) }
     var selectedCardDetails by remember { mutableStateOf<TarotCard?>(null) }
 

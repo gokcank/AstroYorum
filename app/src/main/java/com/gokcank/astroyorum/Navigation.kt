@@ -140,7 +140,18 @@ private fun AstroMainApp(
                         modifier = Modifier
                             .weight(1f)
                             .clip(RoundedCornerShape(12.dp))
-                            .clickable { currentTab = tabIndex }
+                            .clickable { 
+                                currentTab = tabIndex 
+                                val tabName = when (tabIndex) {
+                                    0 -> "home"
+                                    1 -> "zodiac"
+                                    2 -> "tarot"
+                                    3 -> "moon"
+                                    4 -> "profile"
+                                    else -> "unknown"
+                                }
+                                com.gokcank.astroyorum.utils.AnalyticsHelper.logScreenView(tabName)
+                            }
                             .padding(vertical = 6.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(2.dp)

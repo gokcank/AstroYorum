@@ -1,4 +1,4 @@
-﻿package com.gokcank.astroyorum.ui.zodiac
+package com.gokcank.astroyorum.ui.zodiac
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
@@ -57,7 +57,7 @@ fun ZodiacScreen(
         ) {
             // ─── 12 Burç Izgara ─────────────────────────────────────────────
             item {
-                val activity = androidx.compose.ui.platform.LocalContext.current as? android.app.Activity
+                val activity = androidx.activity.compose.LocalActivity.current
                 var clickCount by remember { mutableIntStateOf(0) }
 
                 Column(

@@ -1,4 +1,4 @@
-﻿package com.gokcank.astroyorum.ui.home
+package com.gokcank.astroyorum.ui.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -191,7 +191,10 @@ fun HomeScreen(
                     Spacer(Modifier.height(12.dp))
 
                     Button(
-                        onClick = onNavigateToZodiac,
+                        onClick = {
+                            com.gokcank.astroyorum.utils.AnalyticsHelper.logFeatureUsage("feature_zodiac_details")
+                            onNavigateToZodiac()
+                        },
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = GoldenStardust.copy(0.15f),
@@ -217,19 +220,27 @@ fun HomeScreen(
                             emoji = "🔯", title = "Doğum\nHaritası",
                             gradient = listOf(NebulaPurple.copy(0.4f), AstralViolet.copy(0.2f)),
                             modifier = Modifier.weight(1f),
-                            onClick = onNavigateToBirthChart
+                            onClick = {
+                                com.gokcank.astroyorum.utils.AnalyticsHelper.logFeatureUsage("feature_birth_chart")
+                                onNavigateToBirthChart()
+                            }
                         )
                         QuickAccessCard(
                             emoji = "💕", title = "Uyum\nAnalizi",
                             gradient = listOf(RoseQuartz.copy(0.3f), NebulaPurple.copy(0.2f)),
                             modifier = Modifier.weight(1f),
-                            onClick = {}
+                            onClick = {
+                                com.gokcank.astroyorum.utils.AnalyticsHelper.logFeatureUsage("feature_compatibility")
+                            }
                         )
                         QuickAccessCard(
                             emoji = "🌙", title = "Ay\nTakvimi",
                             gradient = listOf(AquaGlow.copy(0.3f), MaterialTheme.colorScheme.surfaceVariant),
                             modifier = Modifier.weight(1f),
-                            onClick = onNavigateToMoon
+                            onClick = {
+                                com.gokcank.astroyorum.utils.AnalyticsHelper.logFeatureUsage("feature_moon_calendar")
+                                onNavigateToMoon()
+                            }
                         )
                     }
                 }

@@ -32,8 +32,8 @@ android {
         applicationId = "com.gokcank.astroyorum"
         minSdk = 26
         targetSdk = 36
-        versionCode = 3
-        versionName = "1.0.2"
+        versionCode = 4
+        versionName = "1.1.0"
 
         manifestPlaceholders["admobAppId"] = admobAppId
         buildConfigField("String", "ADMOB_BANNER_ID", "\"${admobBannerId}\"")
@@ -96,7 +96,8 @@ dependencies {
   implementation(libs.androidx.lifecycle.runtime.ktx)
   implementation(libs.androidx.activity.compose)
 
-  // Arch Components
+  // Arch Components & Core Fragment Fix
+  implementation(libs.androidx.fragment)
   implementation(libs.androidx.lifecycle.runtime.compose)
   implementation(libs.androidx.lifecycle.viewmodel.compose)
 
@@ -144,5 +145,11 @@ dependencies {
   implementation(platform(libs.firebase.bom))
   implementation(libs.firebase.analytics)
   implementation(libs.firebase.crashlytics)
+
+  // Google Play In-App Review & Update
+  implementation(libs.play.review)
+  implementation(libs.play.review.ktx)
+  implementation(libs.play.app.update)
+  implementation(libs.play.app.update.ktx)
 }
 

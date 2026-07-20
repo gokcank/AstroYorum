@@ -37,7 +37,9 @@ class AppConfigRepository(private val context: Context) {
 
         // Cache geçerliyse (24 saat dolmamışsa) lokalden döndür
         if (currentTime - lastFetchTime < twentyFourHoursInMillis) {
-            Log.d("AppConfigRepository", "Cache geçerli, lokalden okunuyor.")
+            if (BuildConfig.DEBUG) {
+                Log.d("AppConfigRepository", "Cache geçerli, lokalden okunuyor.")
+            }
             val maintenanceMode = prefs.getBoolean("maintenance_mode", false)
             val welcomeMessage = prefs.getString("welcome_message", "") ?: ""
             return mapOf(
@@ -70,7 +72,9 @@ class AppConfigRepository(private val context: Context) {
                 apply()
             }
 
-            Log.d("AppConfigRepository", "Remote Config Supabase'den başarıyla çekildi ve önbelleğe alındı: $configMap")
+            if (BuildConfig.DEBUG) {
+                Log.d("AppConfigRepository", "Remote Config Supabase'den başarıyla çekildi ve önbelleğe alındı: $configMap")
+            }
             configMap
         } catch (e: Exception) {
             Log.e("AppConfigRepository", "Remote Config çekilirken hata oluştu", e)
