@@ -1,4 +1,4 @@
-﻿package com.gokcank.astroyorum.ui.splash
+package com.gokcank.astroyorum.ui.splash
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -60,7 +60,7 @@ fun SplashScreen(onSplashFinished: () -> Unit) {
             )
             
             Text(
-                text = "v1.0.2",
+                text = "v1.1.0",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = alphaAnim),
                 modifier = Modifier.padding(top = 4.dp)
