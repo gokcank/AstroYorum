@@ -39,4 +39,4 @@ Gizlilik Politikamızı zaman zaman güncelleyebiliriz. Bu nedenle, herhangi bir
 ## 6. Bize Ulaşın
 
 Gizlilik Politikamız hakkında herhangi bir sorunuz veya öneriniz varsa, bizimle iletişime geçmekten çekinmeyin.
-Email: gokcan.kahraman@outlook.com
+Email: destek.gokcank@gmail.com
