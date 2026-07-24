@@ -275,7 +275,7 @@ fun ProfileScreen(
                 Spacer(Modifier.height(12.dp))
 
                 listOf(
-                    "🌟 AstroYorum v1.1.0",
+                    "🌟 AstroYorum v1.1.1",
                     "👨‍💻 Geliştirici: gokcank",
                     "🔮 Günlük burç yorumları",
                     "🃏 Tarot fal modülü",

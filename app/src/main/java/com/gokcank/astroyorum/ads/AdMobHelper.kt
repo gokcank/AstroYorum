@@ -1,4 +1,4 @@
-﻿package com.gokcank.astroyorum.ads
+package com.gokcank.astroyorum.ads
 
 import android.content.Context
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,6 +22,7 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 
 // Reklam birimleri (Gerçek yayın)
 object AdConfig {
+    const val ENABLE_ADS = false // AdMob geçici kısıtlaması süresince reklamları kapat
     val BANNER_AD_UNIT_ID = com.gokcank.astroyorum.BuildConfig.ADMOB_BANNER_ID
     val INTERSTITIAL_AD_UNIT_ID = com.gokcank.astroyorum.BuildConfig.ADMOB_INTERSTITIAL_ID
     val REWARDED_AD_UNIT_ID = com.gokcank.astroyorum.BuildConfig.ADMOB_REWARDED_ID
@@ -33,6 +34,7 @@ object AdManager {
 
     // Geçiş reklamını önceden yükler
     fun loadInterstitialAd(context: Context) {
+        if (!AdConfig.ENABLE_ADS) return
         val adRequest = AdRequest.Builder().build()
         InterstitialAd.load(context, AdConfig.INTERSTITIAL_AD_UNIT_ID, adRequest,
             object : InterstitialAdLoadCallback() {
@@ -47,6 +49,10 @@ object AdManager {
 
     // Geçiş reklamını gösterir (Örn: Burç detayına girince)
     fun showInterstitialAd(activity: Activity, onAdDismissed: () -> Unit) {
+        if (!AdConfig.ENABLE_ADS) {
+            onAdDismissed()
+            return
+        }
         if (interstitialAd != null) {
             interstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdDismissedFullScreenContent() {
@@ -69,6 +75,7 @@ object AdManager {
 
     // Ödüllü reklamı önceden yükler
     fun loadRewardedAd(context: Context) {
+        if (!AdConfig.ENABLE_ADS) return
         val adRequest = AdRequest.Builder().build()
         RewardedAd.load(context, AdConfig.REWARDED_AD_UNIT_ID, adRequest, object : RewardedAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
@@ -82,6 +89,10 @@ object AdManager {
 
     // Ödüllü reklamı gösterir (Örn: 3 Kart Tarot çekimi)
     fun showRewardedAd(activity: Activity, onUserEarnedReward: () -> Unit, onAdDismissedWithoutReward: () -> Unit) {
+        if (!AdConfig.ENABLE_ADS) {
+            onUserEarnedReward()
+            return
+        }
         if (rewardedAd != null) {
             var rewardEarned = false
             rewardedAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
@@ -109,6 +120,7 @@ object AdManager {
 }
 
 fun initAdMob(context: Context) {
+    if (!AdConfig.ENABLE_ADS) return
     // Geliştirme cihazında test reklamlarının %100 çıkması ve hesabınızın güvende kalması için:
     val testDeviceIds = listOf("DFE5C8B4394FAF4BEAE3B25E6ECDABD8")
     val configuration = com.google.android.gms.ads.RequestConfiguration.Builder()
@@ -126,6 +138,7 @@ fun BannerAdView(
     modifier: Modifier = Modifier,
     adUnitId: String = AdConfig.BANNER_AD_UNIT_ID
 ) {
+    if (!AdConfig.ENABLE_ADS) return
     AndroidView(
         modifier = modifier.fillMaxWidth(),
         factory = { context ->
