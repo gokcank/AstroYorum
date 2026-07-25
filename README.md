@@ -1,12 +1,14 @@
-# AstroYorum 🌟
+<h1 align="center">AstroYorum 🌟</h1>
 
-![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
-![Kotlin](https://img.shields.io/badge/Kotlin-B125EA?style=for-the-badge&logo=kotlin&logoColor=white)
-![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
-![Llama 3](https://img.shields.io/badge/Llama_3.3_70B-0466C8?style=for-the-badge&logo=meta&logoColor=white)
-![Groq](https://img.shields.io/badge/Groq-F55036?style=for-the-badge&logo=groq&logoColor=white)
-![License](https://img.shields.io/github/license/gokcank/AstroYorum?style=for-the-badge)
-![Version](https://img.shields.io/badge/Version-v1.1.1-blue?style=for-the-badge)
+<p align="center">
+  <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android" />
+  <img src="https://img.shields.io/badge/Kotlin-B125EA?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin" />
+  <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
+  <img src="https://img.shields.io/badge/Llama_3.3_70B-0466C8?style=for-the-badge&logo=meta&logoColor=white" alt="Llama 3" />
+  <img src="https://img.shields.io/badge/Groq-F55036?style=for-the-badge&logo=groq&logoColor=white" alt="Groq" />
+  <img src="https://img.shields.io/github/license/gokcank/AstroYorum?style=for-the-badge" alt="License" />
+  <img src="https://img.shields.io/badge/Version-v1.1.1-blue?style=for-the-badge" alt="Version" />
+</p>
 
 <p align="center">
   <img src="screenshots/cover.png" width="100%" />
