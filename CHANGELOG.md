@@ -7,12 +7,14 @@ All notable changes, patches, and new features in the AstroYorum project will be
 ## [v1.1.1] - 2026-07-24
 
 ### 🇬🇧 English
-#### 🛠️ Infrastructure & Ad Management
+#### 🛠️ Infrastructure & AI
+- **AI Model Upgrade:** Migrated daily horoscope generation engine to **GPT OSS 120B** on Groq, significantly enhancing Turkish astrological vocabulary and literary depth.
 - **Ad Management:** Integrated a master toggle to temporarily disable AdMob ad requests and ensure a smooth, uninterrupted user experience.
 - **Version Bump:** Promoted application version to `v1.1.1` (`versionCode 6`).
 
 ### 🇹🇷 Türkçe
-#### 🛠️ Altyapı ve Reklam Yönetimi
+#### 🛠️ Altyapı ve Yapay Zeka
+- **Yapay Zeka Modeli Yükseltmesi:** Günlük burç yorumu üretim motoru Groq üzerindeki **GPT OSS 120B** modeline taşındı; Türkçe astrolojik anlatım ve edebi zenginlik önemli ölçüde artırıldı.
 - **Reklam Yönetimi:** Kesintisiz kullanıcı deneyimi için AdMob reklam isteklerini geçici olarak pasife alan merkezi şalter yapısı entegre edildi.
 - **Sürüm Güncellemesi:** Uygulama sürümü `v1.1.1` (`versionCode 6`) seviyesine yükseltildi.
 
