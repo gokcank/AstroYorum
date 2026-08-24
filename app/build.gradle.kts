@@ -15,10 +15,10 @@ if (localPropertiesFile.exists()) {
     localProperties.load(FileInputStream(localPropertiesFile))
 }
 
-val admobAppId = localProperties.getProperty("ADMOB_APP_ID") ?: ""
-val admobBannerId = localProperties.getProperty("ADMOB_BANNER_ID") ?: ""
-val admobInterstitialId = localProperties.getProperty("ADMOB_INTERSTITIAL_ID") ?: ""
-val admobRewardedId = localProperties.getProperty("ADMOB_REWARDED_ID") ?: ""
+val admobAppId = localProperties.getProperty("ADMOB_APP_ID") ?: "ca-app-pub-3940256099942544~3347511713"
+val admobBannerId = localProperties.getProperty("ADMOB_BANNER_ID") ?: "ca-app-pub-3940256099942544/6300978111"
+val admobInterstitialId = localProperties.getProperty("ADMOB_INTERSTITIAL_ID") ?: "ca-app-pub-3940256099942544/1033173712"
+val admobRewardedId = localProperties.getProperty("ADMOB_REWARDED_ID") ?: "ca-app-pub-3940256099942544/5224354917"
 val keystorePasswordStr = localProperties.getProperty("KEYSTORE_PASSWORD") ?: ""
 val keyPasswordStr = localProperties.getProperty("KEY_PASSWORD") ?: ""
 val hasSigningConfig = localPropertiesFile.exists() && keystorePasswordStr.isNotEmpty()

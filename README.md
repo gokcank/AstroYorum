@@ -8,6 +8,7 @@
   <img src="https://img.shields.io/badge/Groq-F55036?style=for-the-badge&logo=groq&logoColor=white" alt="Groq" />
   <img src="https://img.shields.io/github/license/gokcank/AstroYorum?style=for-the-badge" alt="License" />
   <img src="https://img.shields.io/badge/Version-v1.1.2-blue?style=for-the-badge" alt="Version" />
+  <a href="https://github.com/gokcank/AstroYorum/actions/workflows/android-ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/gokcank/AstroYorum/android-ci.yml?branch=main&style=for-the-badge&logo=githubactions&logoColor=white&label=Build" alt="Build Status" /></a>
 </p>
 
 <p align="center">
