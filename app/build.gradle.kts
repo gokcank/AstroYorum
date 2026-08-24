@@ -59,6 +59,9 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            ndk {
+                debugSymbolLevel = "FULL"
+            }
             if (hasSigningConfig) {
                 signingConfig = signingConfigs.getByName("release")
             }
