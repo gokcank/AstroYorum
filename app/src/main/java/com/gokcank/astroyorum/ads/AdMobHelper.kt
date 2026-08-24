@@ -22,7 +22,7 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 
 // Reklam birimleri (Gerçek yayın)
 object AdConfig {
-    const val ENABLE_ADS = false // AdMob geçici kısıtlaması süresince reklamları kapat
+    const val ENABLE_ADS = true // AdMob reklamları aktif
     val BANNER_AD_UNIT_ID = com.gokcank.astroyorum.BuildConfig.ADMOB_BANNER_ID
     val INTERSTITIAL_AD_UNIT_ID = com.gokcank.astroyorum.BuildConfig.ADMOB_INTERSTITIAL_ID
     val REWARDED_AD_UNIT_ID = com.gokcank.astroyorum.BuildConfig.ADMOB_REWARDED_ID

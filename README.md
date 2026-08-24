@@ -7,7 +7,7 @@
   <img src="https://img.shields.io/badge/GPT_OSS_120B-0466C8?style=for-the-badge&logo=openai&logoColor=white" alt="GPT OSS 120B" />
   <img src="https://img.shields.io/badge/Groq-F55036?style=for-the-badge&logo=groq&logoColor=white" alt="Groq" />
   <img src="https://img.shields.io/github/license/gokcank/AstroYorum?style=for-the-badge" alt="License" />
-  <img src="https://img.shields.io/badge/Version-v1.1.1-blue?style=for-the-badge" alt="Version" />
+  <img src="https://img.shields.io/badge/Version-v1.1.2-blue?style=for-the-badge" alt="Version" />
 </p>
 
 <p align="center">

@@ -4,6 +4,22 @@ All notable changes, patches, and new features in the AstroYorum project will be
 
 *(AstroYorum projesindeki tüm önemli değişiklikler, yamalar ve yeni özellikler bu dosyada belgelenmektedir.)*
 
+## [v1.1.2] - 2026-08-25
+
+### 🇬🇧 English
+#### 🛠️ Infrastructure & Monetization
+- **AdMob Monetization Activated:** Re-enabled AdMob Banner, Interstitial, and Rewarded ads with balanced frequency capping.
+- **NDK Debug Symbols:** Added full NDK debug symbol mapping (`ndk.debugSymbolLevel = "FULL"`) for Play Console ANR and crash analysis.
+- **Version Bump:** Promoted application version to `v1.1.2` (`versionCode 7`).
+
+### 🇹🇷 Türkçe
+#### 🛠️ Altyapı ve Gelir Modeli
+- **AdMob Reklamları Aktif:** Banner, Geçiş ve Ödüllü video reklam akışı kullanıcı dostu sıklık oranlarıyla aktif edildi.
+- **NDK Hata Ayıklama Sembolleri:** Play Console çökme ve ANR analizleri için tam NDK sembol yapılandırması (`ndk.debugSymbolLevel = "FULL"`) eklendi.
+- **Sürüm Güncellemesi:** Uygulama sürümü `v1.1.2` (`versionCode 7`) seviyesine yükseltildi.
+
+---
+
 ## [v1.1.1] - 2026-07-24
 
 ### 🇬🇧 English
