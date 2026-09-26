@@ -4,6 +4,24 @@ All notable changes, patches, and new features in the AstroYorum project will be
 
 *(AstroYorum projesindeki tüm önemli değişiklikler, yamalar ve yeni özellikler bu dosyada belgelenmektedir.)*
 
+## [v1.1.3] - 2026-09-26
+
+### 🇬🇧 English
+#### 🌟 AI & Horoscope Experience
+- **Structured 3-Paragraph Horoscopes:** Enforced 3 distinct astrological dimensions (`general`, `love`, `career`) generated via Groq Edge Function for rich, detailed, and comprehensive daily readings.
+- **On-Demand Auto-Generation:** Integrated an automatic on-demand trigger to invoke the horoscope generation pipeline if the daily forecast is not yet present in the database.
+- **Offline & Error Resilience:** Introduced transparent offline error feedback with an instant retry action button (`Tekrar Dene 🔄`), ensuring smooth recovery when connection is restored.
+- **Version Bump:** Promoted application version to `v1.1.3` (`versionCode 8`).
+
+### 🇹🇷 Türkçe
+#### 🌟 Yapay Zeka ve Burç Deneyimi
+- **3 Paragraflı Detaylı Burç Yorumları:** Günlük yorumlar Groq Edge Function üzerinden `genel`, `aşk` ve `kariyer` olmak üzere 3 zengin boyutta yapılandırılarak kapsamlı bir astroloji deneyimine dönüştürüldü.
+- **İhtiyaç Anında Otomatik Üretim:** Günün yorumları henüz veritabanında oluşmamışsa arka planda üretim sürecini tetikleyen akıllı mekanizma entegre edildi.
+- **Çevrimdışı ve Hata Dayanıklılığı:** İnternet kesintilerinde veya veri gecikmelerinde kullanıcıyı bilgilendiren şeffaf hata mesajı ve tek tıkla yenileme (`Tekrar Dene 🔄`) butonu eklendi.
+- **Sürüm Güncellemesi:** Uygulama sürümü `v1.1.3` (`versionCode 8`) seviyesine yükseltildi.
+
+---
+
 ## [v1.1.2] - 2026-08-25
 
 ### 🇬🇧 English

@@ -60,7 +60,7 @@ fun SplashScreen(onSplashFinished: () -> Unit) {
             )
             
             Text(
-                text = "v1.1.2",
+                text = "v1.1.3",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = alphaAnim),
                 modifier = Modifier.padding(top = 4.dp)

@@ -32,8 +32,8 @@ android {
         applicationId = "com.gokcank.astroyorum"
         minSdk = 26
         targetSdk = 36
-        versionCode = 7
-        versionName = "1.1.2"
+        versionCode = 8
+        versionName = "1.1.3"
 
         manifestPlaceholders["admobAppId"] = admobAppId
         buildConfigField("String", "ADMOB_BANNER_ID", "\"${admobBannerId}\"")
