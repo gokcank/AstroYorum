@@ -1,6 +1,6 @@
 # AstroYorum - Gizlilik Politikası (Privacy Policy)
 
-Son Güncelleme: 21 Temmuz 2026
+Son Güncelleme: 26 Eylül 2026
 
 Hasan Gökcan Kahraman ("Geliştirici"), AstroYorum ("Uygulama") uygulamasını ücretsiz, reklam destekli bir uygulama olarak sunmaktadır. Bu HİZMET, Geliştirici tarafından ücretsiz olarak sağlanmaktadır ve olduğu gibi kullanılması amaçlanmıştır.
 
