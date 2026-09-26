@@ -30,7 +30,8 @@ fun HomeScreen(
     onNavigateToTarot: () -> Unit,
     onNavigateToMoon: () -> Unit,
     onNavigateToBirthChart: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onRetry: () -> Unit = {}
 ) {
     val sign = ZodiacDatabase.getById(userProfile.zodiacSignId)
     val dailyCard = remember { TarotDatabase.getDailyCard() }
@@ -135,74 +136,100 @@ fun HomeScreen(
                     StarDivider()
                     Spacer(Modifier.height(16.dp))
 
-                    val dailyText = when (horoscopeUiState) {
-                        is com.gokcank.astroyorum.ui.main.HoroscopeUiState.Loading -> "Yıldızların mesajı alınıyor..."
-                        is com.gokcank.astroyorum.ui.main.HoroscopeUiState.Success -> 
-                            horoscopeUiState.data.horoscopes[sign.englishName] ?: "Bugün için özel mesajınız hazırlanıyor."
-                        is com.gokcank.astroyorum.ui.main.HoroscopeUiState.Error -> horoscopeUiState.message
-                    }
-
-                    Text(
-                        text = dailyText,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        lineHeight = 22.sp,
-                        maxLines = 4,
-                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
-                    )
-
-                    Spacer(Modifier.height(16.dp))
-
-                    val currentScores = if (horoscopeUiState is com.gokcank.astroyorum.ui.main.HoroscopeUiState.Success) {
-                        horoscopeUiState.data.scores[sign.englishName] ?: ZodiacScores(sign.loveScore, sign.careerScore, sign.healthScore)
+                    if (horoscopeUiState is com.gokcank.astroyorum.ui.main.HoroscopeUiState.Error) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 12.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            Text(
+                                text = horoscopeUiState.message,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                                lineHeight = 22.sp
+                            )
+                            OutlinedButton(
+                                onClick = onRetry,
+                                shape = RoundedCornerShape(12.dp),
+                                colors = ButtonDefaults.outlinedButtonColors(contentColor = GoldenStardust),
+                                border = androidx.compose.foundation.BorderStroke(1.dp, GoldenStardust.copy(alpha = 0.5f))
+                            ) {
+                                Text("Tekrar Dene 🔄")
+                            }
+                        }
                     } else {
-                        ZodiacScores(sign.loveScore, sign.careerScore, sign.healthScore)
-                    }
+                        val dailyText = when (horoscopeUiState) {
+                            is com.gokcank.astroyorum.ui.main.HoroscopeUiState.Loading -> "Yıldızların mesajı hazırlanıyor... ✨"
+                            is com.gokcank.astroyorum.ui.main.HoroscopeUiState.Success -> 
+                                horoscopeUiState.data.horoscopes[sign.englishName] ?: "Bugün için özel mesajınız hazırlanıyor."
+                            is com.gokcank.astroyorum.ui.main.HoroscopeUiState.Error -> ""
+                        }
 
-                    // Bugünün skorları
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        ScoreIndicator("Aşk", currentScores.love, "❤️",
-                            color = RoseQuartz, modifier = Modifier.weight(1f))
-                        ScoreIndicator("Kariyer", currentScores.career, "💼",
-                            color = GoldenStardust, modifier = Modifier.weight(1f))
-                        ScoreIndicator("Sağlık", currentScores.health, "🌿",
-                            color = AquaGlow, modifier = Modifier.weight(1f))
-                    }
+                        Text(
+                            text = dailyText,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            lineHeight = 22.sp,
+                            maxLines = 4,
+                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                        )
 
-                    Spacer(Modifier.height(12.dp))
+                        Spacer(Modifier.height(16.dp))
 
-                    // Şanslı bilgiler
-                    val luckyNumber = if (currentScores.luckyNumber > 0) currentScores.luckyNumber else sign.luckyNumber
-                    val luckyStone = currentScores.luckyStone.ifEmpty { sign.luckyStone }
-                    val luckyColor = currentScores.luckyColor.ifEmpty { sign.luckyColor }
+                        val currentScores = if (horoscopeUiState is com.gokcank.astroyorum.ui.main.HoroscopeUiState.Success) {
+                            horoscopeUiState.data.scores[sign.englishName] ?: ZodiacScores(sign.loveScore, sign.careerScore, sign.healthScore)
+                        } else {
+                            ZodiacScores(sign.loveScore, sign.careerScore, sign.healthScore)
+                        }
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        LuckyChip("🔢 $luckyNumber", "Sayı")
-                        LuckyChip("💎 $luckyStone", "Taş")
-                        LuckyChip("🎨 $luckyColor", "Renk")
-                    }
+                        // Bugünün skorları
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            ScoreIndicator("Aşk", currentScores.love, "❤️",
+                                color = RoseQuartz, modifier = Modifier.weight(1f))
+                            ScoreIndicator("Kariyer", currentScores.career, "💼",
+                                color = GoldenStardust, modifier = Modifier.weight(1f))
+                            ScoreIndicator("Sağlık", currentScores.health, "🌿",
+                                color = AquaGlow, modifier = Modifier.weight(1f))
+                        }
 
-                    Spacer(Modifier.height(12.dp))
+                        Spacer(Modifier.height(12.dp))
 
-                    Button(
-                        onClick = {
-                            com.gokcank.astroyorum.utils.AnalyticsHelper.logFeatureUsage("feature_zodiac_details")
-                            onNavigateToZodiac()
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = GoldenStardust.copy(0.15f),
-                            contentColor = GoldenStardust
-                        ),
-                        shape = RoundedCornerShape(12.dp)
-                    ) {
-                        Text("Burcunun Detaylarını Gör →")
+                        // Şanslı bilgiler
+                        val luckyNumber = if (currentScores.luckyNumber > 0) currentScores.luckyNumber else sign.luckyNumber
+                        val luckyStone = currentScores.luckyStone.ifEmpty { sign.luckyStone }
+                        val luckyColor = currentScores.luckyColor.ifEmpty { sign.luckyColor }
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            LuckyChip("🔢 $luckyNumber", "Sayı")
+                            LuckyChip("💎 $luckyStone", "Taş")
+                            LuckyChip("🎨 $luckyColor", "Renk")
+                        }
+
+                        Spacer(Modifier.height(12.dp))
+
+                        Button(
+                            onClick = {
+                                com.gokcank.astroyorum.utils.AnalyticsHelper.logFeatureUsage("feature_zodiac_details")
+                                onNavigateToZodiac()
+                            },
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = GoldenStardust.copy(0.15f),
+                                contentColor = GoldenStardust
+                            ),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Text("Burcunun Detaylarını Gör →")
+                        }
                     }
                 }
             }

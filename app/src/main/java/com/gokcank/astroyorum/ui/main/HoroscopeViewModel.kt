@@ -1,4 +1,4 @@
-﻿package com.gokcank.astroyorum.ui.main
+package com.gokcank.astroyorum.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -34,7 +34,7 @@ class HoroscopeViewModel : ViewModel() {
             if (astroData != null && astroData.horoscopes.isNotEmpty()) {
                 _uiState.value = HoroscopeUiState.Success(astroData)
             } else {
-                _uiState.value = HoroscopeUiState.Error("Henüz bugünün yorumları yüklenmemiş veya internet bağlantısı yok.")
+                _uiState.value = HoroscopeUiState.Error("İnternet bağlantısı kurulamadı. Lütfen bağlantınızı kontrol edip tekrar deneyin.")
             }
         }
     }

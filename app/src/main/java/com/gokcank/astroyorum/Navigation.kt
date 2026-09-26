@@ -97,11 +97,13 @@ private fun AstroMainApp(
                     onNavigateToZodiac = { currentTab = 1 },
                     onNavigateToTarot = { currentTab = 2 },
                     onNavigateToMoon = { currentTab = 3 },
-                    onNavigateToBirthChart = { backStack.add(BirthChartScreen) }
+                    onNavigateToBirthChart = { backStack.add(BirthChartScreen) },
+                    onRetry = { horoscopeViewModel.fetchHoroscopes() }
                 )
                 1 -> ZodiacScreen(
                     initialSignId = userProfile.zodiacSignId,
-                    horoscopeUiState = horoscopeUiState
+                    horoscopeUiState = horoscopeUiState,
+                    onRetry = { horoscopeViewModel.fetchHoroscopes() }
                 )
                 2 -> TarotScreen()
                 3 -> MoonScreen(horoscopeUiState = horoscopeUiState)

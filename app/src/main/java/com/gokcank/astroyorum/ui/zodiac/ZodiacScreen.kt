@@ -25,7 +25,8 @@ import androidx.compose.material3.MaterialTheme
 fun ZodiacScreen(
     initialSignId: Int = 0,
     horoscopeUiState: com.gokcank.astroyorum.ui.main.HoroscopeUiState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onRetry: () -> Unit = {}
 ) {
     var selectedSign by remember { mutableStateOf(ZodiacDatabase.getById(initialSignId)) }
 
@@ -160,7 +161,7 @@ fun ZodiacScreen(
                     targetState = selectedSign,
                     transitionSpec = { fadeIn() togetherWith fadeOut() }
                 ) { sign ->
-                    HoroscopeContent(sign = sign, horoscopeUiState = horoscopeUiState)
+                    HoroscopeContent(sign = sign, horoscopeUiState = horoscopeUiState, onRetry = onRetry)
                 }
             }
 
@@ -235,26 +236,71 @@ fun ZodiacScreen(
 @Composable
 private fun HoroscopeContent(
     sign: ZodiacSign, 
-    horoscopeUiState: com.gokcank.astroyorum.ui.main.HoroscopeUiState
+    horoscopeUiState: com.gokcank.astroyorum.ui.main.HoroscopeUiState,
+    onRetry: () -> Unit = {}
 ) {
-    val text = when (horoscopeUiState) {
-        is com.gokcank.astroyorum.ui.main.HoroscopeUiState.Loading -> "Yıldızların mesajı alınıyor..."
-        is com.gokcank.astroyorum.ui.main.HoroscopeUiState.Success -> 
-            horoscopeUiState.data.horoscopes[sign.englishName] ?: "Bugün için özel mesajınız hazırlanıyor."
-        is com.gokcank.astroyorum.ui.main.HoroscopeUiState.Error -> horoscopeUiState.message
-    }
-
     AstroCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            lineHeight = 24.sp
-        )
+        when (horoscopeUiState) {
+            is com.gokcank.astroyorum.ui.main.HoroscopeUiState.Loading -> {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp),
+                        strokeWidth = 2.dp,
+                        color = GoldenStardust
+                    )
+                    Spacer(Modifier.width(12.dp))
+                    Text(
+                        text = "Yıldızların mesajı hazırlanıyor... ✨",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+            }
+            is com.gokcank.astroyorum.ui.main.HoroscopeUiState.Error -> {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 12.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Text(
+                        text = horoscopeUiState.message,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                        lineHeight = 22.sp
+                    )
+                    OutlinedButton(
+                        onClick = onRetry,
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ButtonDefaults.outlinedButtonColors(contentColor = GoldenStardust),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, GoldenStardust.copy(alpha = 0.5f))
+                    ) {
+                        Text("Tekrar Dene 🔄")
+                    }
+                }
+            }
+            is com.gokcank.astroyorum.ui.main.HoroscopeUiState.Success -> {
+                val text = horoscopeUiState.data.horoscopes[sign.englishName] ?: "Bugün için özel mesajınız hazırlanıyor."
+                Text(
+                    text = text,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    lineHeight = 24.sp
+                )
+            }
+        }
     }
 }
 

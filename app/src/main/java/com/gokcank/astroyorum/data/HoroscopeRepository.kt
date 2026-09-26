@@ -1,4 +1,4 @@
-﻿package com.gokcank.astroyorum.data
+package com.gokcank.astroyorum.data
 
 import android.util.Log
 import com.gokcank.astroyorum.BuildConfig
@@ -12,6 +12,10 @@ import kotlinx.serialization.json.int
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.long
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.net.HttpURLConnection
+import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -36,11 +40,16 @@ class HoroscopeRepository {
         return try {
             val dateStr = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
 
-            val row = supabase.from("daily_horoscopes")
-                .select {
-                    filter { eq("date", dateStr) }
+            var row = fetchHoroscopeRow(dateStr)
+
+            // Eğer veritabanında bugün için kayıt yoksa Edge Function'ı otomatik tetikle (On-Demand)
+            if (row == null) {
+                Log.i("HoroscopeRepository", "Bugün için kayıt bulunamadı ($dateStr), Edge Function tetikleniyor...")
+                val success = triggerEdgeFunction()
+                if (success) {
+                    row = fetchHoroscopeRow(dateStr)
                 }
-                .decodeSingleOrNull<SupabaseHoroscopeRow>()
+            }
 
             if (row != null) {
                 // horoscopes: JsonObject -> Map<String, String>
@@ -76,36 +85,44 @@ class HoroscopeRepository {
 
                 DailyAstroData(horoscopes, scores, moonPhase)
             } else {
-                // Veritabanında bugün için kayıt yoksa fallback verileri döndür
-                Log.w("HoroscopeRepository", "Bugün için Supabase'de veri bulunamadı: $dateStr")
-                val mockHoroscopes = mapOf(
-                    "Aries" to "Bugün Koç burçları için enerjik ve hareketli bir gün.",
-                    "Taurus" to "Sevgili Boğa, planlarınızı sağlamlaştırmak için mükemmel bir gün.",
-                    "Gemini" to "İkizler, iletişim becerileriniz harika.",
-                    "Cancer" to "Duygusal yengeçler, iç sesinize kulak verin.",
-                    "Leo" to "Aslanlar sahneye çıkmaya hazır olun!",
-                    "Virgo" to "Başak burçları, düzen arayışınız sonuç veriyor.",
-                    "Libra" to "Teraziler, uyum ve denge bugün sizinle.",
-                    "Scorpio" to "Gizemli Akrepler, odaklanma gücünüz çok yüksek.",
-                    "Sagittarius" to "Özgür ruhlu Yaylar, yeni maceralar kapıda.",
-                    "Capricorn" to "Oğlaklar, disiplinli çalışmanızın karşılığını alma zamanı geldi.",
-                    "Aquarius" to "Yenilikçi Kovalar, farklı fikirlerinizle bugün herkesi şaşırtacaksınız.",
-                    "Pisces" to "Duyarlı Balıklar, hayal gücünüz sınır tanımıyor."
-                )
-                val colors = listOf("Kırmızı", "Mavi", "Yeşil", "Sarı", "Mor", "Turuncu", "Beyaz")
-                val stones = listOf("Ametist", "Kuvars", "Yakut", "Zümrüt", "Safir", "Turkuaz")
-                val mockScores = mockHoroscopes.keys.associateWith {
-                    ZodiacScores(
-                        love = (50..100).random(), career = (50..100).random(),
-                        health = (50..100).random(), luckyNumber = (1..99).random(),
-                        luckyStone = stones.random(), luckyColor = colors.random()
-                    )
-                }
-                DailyAstroData(mockHoroscopes, mockScores, todayMoonPhase())
+                Log.w("HoroscopeRepository", "Bugün için astroloji verisi temin edilemedi: $dateStr")
+                null
             }
         } catch (e: Exception) {
             Log.e("HoroscopeRepository", "Supabase veri çekme hatası", e)
             null
+        }
+    }
+
+    private suspend fun fetchHoroscopeRow(dateStr: String): SupabaseHoroscopeRow? {
+        return try {
+            supabase.from("daily_horoscopes")
+                .select {
+                    filter { eq("date", dateStr) }
+                }
+                .decodeSingleOrNull<SupabaseHoroscopeRow>()
+        } catch (e: Exception) {
+            Log.e("HoroscopeRepository", "fetchHoroscopeRow hatası: $dateStr", e)
+            null
+        }
+    }
+
+    private suspend fun triggerEdgeFunction(): Boolean = withContext(Dispatchers.IO) {
+        try {
+            val url = URL("${BuildConfig.SUPABASE_URL}/functions/v1/update-horoscopes")
+            val connection = url.openConnection() as HttpURLConnection
+            connection.requestMethod = "POST"
+            connection.setRequestProperty("Authorization", "Bearer ${BuildConfig.SUPABASE_ANON_KEY}")
+            connection.setRequestProperty("Content-Type", "application/json")
+            connection.connectTimeout = 15000
+            connection.readTimeout = 30000
+            connection.doOutput = true
+            val responseCode = connection.responseCode
+            connection.disconnect()
+            responseCode in 200..299
+        } catch (e: Exception) {
+            Log.e("HoroscopeRepository", "Edge function tetikleme hatası", e)
+            false
         }
     }
 }
