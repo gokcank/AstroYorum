@@ -40,6 +40,8 @@ moon phase; backend on Supabase (Postgres + Edge Functions) with Groq-hosted mod
 - v1.1.3 (`versionCode = 8`, 2026-09-26). Google Play closed test (14 days, 20 testers) completed.
 
 ## Open items
+- Debug builds serve live ads when live AdMob IDs are in `local.properties`: force Google test IDs in debug.
+- Without signing values the release build comes out unsigned; add a debug-signing fallback.
 - Production access questionnaire and production release in Play Console.
 - Monitor crash rates after production.
 
