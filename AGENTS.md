@@ -37,6 +37,7 @@ moon phase; backend on Supabase (Postgres + Edge Functions) with Groq-hosted mod
 - `androidx.fragment` is pinned in `gradle/libs.versions.toml` to silence a Play Console advisory; keep the direct dependency.
 
 ## Status (as of 2026-11-07)
+- Project status: **paused** (set 2026-11-18; source of truth: the brain page).
 - v1.1.3 (`versionCode = 8`, 2026-09-26). Google Play closed test (14 days, 20 testers) completed.
 
 ## Open items
